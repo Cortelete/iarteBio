@@ -14,9 +14,10 @@ import { ArrowLeftIcon } from '../components/icons/ArrowLeftIcon';
 
 interface CatalogPageProps {
   navigateTo: (page: 'home' | 'catalog') => void;
+  initialTarget?: { categoryName?: string } | null;
 }
 
-const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo }) => {
+const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo, initialTarget }) => {
   const [selectedCategory, setSelectedCategory] = useState<CatalogCategory | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<CatalogSubcategory | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,6 +34,21 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo }) => {
       setIsClickLocked(false);
     }, 500); // 0.5-second cooldown
   }, []);
+  
+  const handleSelectCategory = useCallback((category: CatalogCategory) => {
+    setSelectedCategory(category);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    if (initialTarget?.categoryName) {
+      const category = catalogData.find(c => c.category === initialTarget.categoryName);
+      if (category) {
+        handleSelectCategory(category);
+      }
+    }
+  }, [initialTarget, handleSelectCategory]);
+
 
   useEffect(() => {
     // Cleanup timeout on component unmount
@@ -42,11 +58,6 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo }) => {
       }
     };
   }, []);
-
-  const handleSelectCategory = (category: CatalogCategory) => {
-    setSelectedCategory(category);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
