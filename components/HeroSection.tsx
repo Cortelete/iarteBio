@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { InstagramIcon } from './icons/InstagramIcon';
 import { LinkedInIcon } from './icons/LinkedInIcon';
@@ -54,7 +55,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
             <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
               <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
             </span>
-          </a>
+          </button>
           <a
             href="https://iarte.vercel.app/"
             target="_blank"
