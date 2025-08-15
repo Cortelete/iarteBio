@@ -7,7 +7,7 @@ import { MenuIcon } from './icons/MenuIcon';
 import MobileMenu from './MobileMenu';
 
 interface HeaderProps {
-  navigateTo: (page: 'home' | 'catalog') => void;
+  navigateTo: (page: 'home' | 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
   openRedirectModal: () => void;
 }
