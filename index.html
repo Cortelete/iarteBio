@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InteligenciArte.IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .text-gradient {
+          @apply bg-clip-text text-transparent;
+        }
+
+        /* Custom scrollbar for specific elements */
+        .scrollbar-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            background-size: 200% 200%;
+            animation: gradient-pan 10s ease infinite;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            filter: brightness(1.2);
+        }
+        
+        /* For Firefox */
+        .scrollbar-custom {
+            scrollbar-width: thin;
+            scrollbar-color: #a78bfa rgba(255, 255, 255, 0.1);
+        }
+      }
+      @layer base {
+        body {
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Custom Animated Scrollbar */
+        html {
+            /* For Firefox */
+            scrollbar-width: thin;
+            scrollbar-color: #a78bfa rgba(0,0,0,0.3); /* purple-400 thumb, dark transparent track */
+        }
+
+        /* For Webkit-based browsers (Chrome, Safari, etc.) */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6); /* blue-400, purple-400, pink-400 */
+            background-size: 400% 400%;
+            animation: gradient-pan 15s ease infinite;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            filter: brightness(1.2);
+            transition: filter 0.2s ease-in-out;
+        }
+        
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-dark': '#0a0a0a',
+              'brand-light': '#f5f5f5',
+              'brand-gray': '#a0a0a0',
+            },
+            animation: {
+              'gradient-pan': 'gradient-pan 15s ease infinite',
+              'text-gradient-pan': 'gradient-pan 8s ease infinite',
+              'text-glow': 'text-glow 6s ease-in-out infinite',
+              'subtle-pulse': 'subtle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+              'gleam': 'gleam 1.5s ease-in-out infinite',
+            },
+            keyframes: {
+              'gradient-pan': {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
+              },
+              'text-glow': {
+                '0%':   { filter: 'drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' }, /* blue-400 */
+                '33%':  { filter: 'drop-shadow(0 0 12px rgba(167, 139, 250, 0.8))' }, /* purple-400 */
+                '66%':  { filter: 'drop-shadow(0 0 10px rgba(244, 114, 182, 0.6))' }, /* pink-400 */
+                '100%': { filter: 'drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' }, /* blue-400 */
+              },
+              'subtle-pulse': {
+                '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                '50%': { transform: 'scale(1.05)', opacity: '0.9' },
+              },
+              'fade-in-up': {
+                '0%': {
+                  opacity: '0',
+                  transform: 'translateY(20px)'
+                },
+                '100%': {
+                  opacity: '1',
+                  transform: 'translateY(0)'
+                },
+              },
+              'gleam': {
+                '0%': { transform: 'translateX(-150%) skewX(-20deg)' },
+                '100%': { transform: 'translateX(150%) skewX(-20deg)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "framer-motion": "https://esm.sh/framer-motion@^11.1.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
