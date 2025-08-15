@@ -1,4 +1,5 @@
 
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { catalogData } from '../data/catalog';
 import { CatalogCategory, CatalogSubcategory } from '../types';
@@ -30,7 +31,7 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo }) => {
     setIsClickLocked(true);
     clickLockTimeoutRef.current = window.setTimeout(() => {
       setIsClickLocked(false);
-    }, 2000); // 2-second cooldown
+    }, 500); // 0.5-second cooldown
   }, []);
 
   useEffect(() => {
@@ -44,12 +45,12 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ navigateTo }) => {
 
   const handleSelectCategory = (category: CatalogCategory) => {
     setSelectedCategory(category);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenModal = (subcategory: CatalogSubcategory) => {
