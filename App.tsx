@@ -10,12 +10,22 @@ import PortfolioModal from './components/PortfolioModal';
 import RedirectModal from './components/RedirectModal';
 import BackgroundStars from './components/BackgroundStars';
 
+type NavigationTarget = {
+  categoryName?: string;
+};
+
 const App: React.FC = () => {
   const [page, setPage] = useState<'home' | 'catalog'>('home');
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
+  const [initialCatalogTarget, setInitialCatalogTarget] = useState<NavigationTarget | null>(null);
 
-  const navigateTo = (targetPage: 'home' | 'catalog') => {
+  const navigateTo = (targetPage: 'home' | 'catalog', target?: NavigationTarget) => {
+    if (targetPage === 'catalog' && target) {
+      setInitialCatalogTarget(target);
+    } else {
+      setInitialCatalogTarget(null);
+    }
     setPage(targetPage);
     window.scrollTo(0, 0);
   };
@@ -40,7 +50,7 @@ const App: React.FC = () => {
               <HeroSection navigateTo={navigateTo} openPortfolio={openPortfolio} />
             </>
           )}
-          {page === 'catalog' && <CatalogPage navigateTo={navigateTo} />}
+          {page === 'catalog' && <CatalogPage navigateTo={navigateTo} initialTarget={initialCatalogTarget} />}
         </main>
         <Footer />
         <WhatsAppButton />
