@@ -19,7 +19,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative pt-24 pb-12 sm:pb-16 px-4">
+    <section className="min-h-screen flex items-center justify-center relative pt-16 sm:pt-24 pb-12 sm:pb-16 px-4">
       <div
         className="relative z-10 w-full max-w-3xl mx-auto opacity-0 animate-fade-in-up bg-brand-dark/40 backdrop-blur-lg border border-white/10 rounded-2xl p-4 sm:p-8 md:p-12 text-center flex flex-col items-center shadow-2xl shadow-purple-900/20"
         style={{ animationDelay: '100ms' }}
