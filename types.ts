@@ -15,6 +15,28 @@ export interface SubcategoryPlan {
   description: string;
 }
 
+// Raw types for modular data files before processing
+export interface CatalogSubcategoryRaw {
+  name: string;
+  image: string;
+  whatIsIt: string;
+  whatIsItFor: string;
+  howItHelps: string;
+  productionTime?: string;
+  price?: number | null;
+  plans?: readonly SubcategoryPlan[];
+}
+
+export interface CatalogCategoryRaw {
+  category: string;
+  emoji: string;
+  keyIndicators: readonly { label: string; value: string; }[];
+  metrics: readonly CategoryMetric[];
+  subcategories: readonly CatalogSubcategoryRaw[];
+}
+
+
+// Processed types used by the application
 export interface CatalogSubcategory {
   name:string;
   price: number | null;
