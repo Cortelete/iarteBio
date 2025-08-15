@@ -7,13 +7,13 @@ import { TikTokIcon } from './icons/TikTokIcon';
 
 
 interface HeroSectionProps {
-  navigateTo: (page: 'home' | 'catalog') => void;
+  navigateTo: (page: 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) => {
 
-  const handleCatalogClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleCatalogClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault();
     navigateTo('catalog');
   }
@@ -36,9 +36,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
           Transformamos ideias em realidade digital com soluções criativas e tecnológicas que impulsionam o seu negócio.
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 w-full">
-          <a
-            href="#"
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 w-full">
+          <button
             onClick={handleCatalogClick}
             className="group w-full sm:w-auto relative inline-block text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
           >
@@ -46,7 +45,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
             <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
               <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
             </span>
-          </a>
+          </button>
           <button
             onClick={openPortfolio}
             className="group w-full sm:w-auto relative inline-block text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden"
@@ -67,6 +66,33 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
               <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
             </span>
           </a>
+        </div>
+
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-10 w-full">
+          <button
+            onClick={() => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' })}
+            className="text-xs sm:text-sm font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-1.5 px-3 sm:px-4 hover:bg-white/10 hover:text-white transition-all duration-300"
+          >
+            Flyers e Cartões
+          </button>
+          <button
+            onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
+            className="text-xs sm:text-sm font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-1.5 px-3 sm:px-4 hover:bg-white/10 hover:text-white transition-all duration-300"
+          >
+            Link na Bio
+          </button>
+          <button
+            onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
+            className="text-xs sm:text-sm font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-1.5 px-3 sm:px-4 hover:bg-white/10 hover:text-white transition-all duration-300"
+          >
+            Site Simples
+          </button>
+          <button
+            onClick={() => navigateTo('catalog', { categoryName: 'Automação' })}
+            className="text-xs sm:text-sm font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-1.5 px-3 sm:px-4 hover:bg-white/10 hover:text-white transition-all duration-300"
+          >
+            Automações
+          </button>
         </div>
         
         <div className="flex items-center gap-3 sm:gap-5">
