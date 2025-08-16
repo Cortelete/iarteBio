@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
         </p>
         <p className="text-sm mt-2">
           Desenvolvido com ❤️ por{' '}
-          <a href="#" className="font-semibold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:brightness-110 transition">
+          <a href="#" className="font-semibold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan hover:brightness-110 transition">
             InteligenciArte.IA
           </a>
         </p>

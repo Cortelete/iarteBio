@@ -4,15 +4,16 @@ import React from 'react';
 import { InstagramIcon } from './icons/InstagramIcon';
 import { LinkedInIcon } from './icons/LinkedInIcon';
 import { TikTokIcon } from './icons/TikTokIcon';
+import { GamepadIcon } from './icons/GamepadIcon';
 
 
 interface HeroSectionProps {
   navigateTo: (page: 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
-  openConstructionModal: () => void;
+  openGameRoom: () => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openConstructionModal }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom }) => {
 
   const handleCatalogClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault();
@@ -68,10 +69,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
             </span>
           </a>
           <button
-            onClick={openConstructionModal}
-            className="group w-full sm:w-auto relative inline-block text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-green-400 to-cyan-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 overflow-hidden animate-subtle-pulse"
-            style={{ animationDuration: '2s' }}
+            onClick={openGameRoom}
+            className="group w-full sm:w-auto relative inline-flex items-center justify-center gap-2 text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 bg-[length:200%_auto] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-pink-500/40 hover:shadow-xl hover:shadow-red-500/50 overflow-hidden animate-[colorful-gradient-pan_4s_ease_infinite,subtle-pulse_2.5s_cubic-bezier(0.4,0,0.6,1)_infinite]"
           >
+            <GamepadIcon className="w-5 h-5 transition-transform group-hover:rotate-[-15deg] duration-300" />
             <span className="relative z-10">Sala de Jogos</span>
             <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
               <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>

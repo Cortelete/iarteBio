@@ -94,11 +94,13 @@
             },
             animation: {
               'gradient-pan': 'gradient-pan 15s ease infinite',
+              'colorful-gradient-pan': 'gradient-pan 4s ease infinite',
               'text-gradient-pan': 'gradient-pan 8s ease infinite',
-              'text-glow': 'text-glow 6s ease-in-out infinite',
+              'text-glow': 'text-glow 4s ease-in-out infinite alternate',
               'subtle-pulse': 'subtle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
               'gleam': 'gleam 1.5s ease-in-out infinite',
+              'star-rise': 'star-rise linear infinite',
             },
             keyframes: {
               'gradient-pan': {
@@ -107,10 +109,9 @@
                 '100%': { backgroundPosition: '0% 50%' },
               },
               'text-glow': {
-                '0%':   { filter: 'drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' }, /* blue-400 */
-                '33%':  { filter: 'drop-shadow(0 0 12px rgba(167, 139, 250, 0.8))' }, /* purple-400 */
-                '66%':  { filter: 'drop-shadow(0 0 10px rgba(244, 114, 182, 0.6))' }, /* pink-400 */
-                '100%': { filter: 'drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' }, /* blue-400 */
+                '0%': { filter: 'drop-shadow(0 0 5px rgba(96, 165, 250, 0.8)) drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' },
+                '50%': { filter: 'drop-shadow(0 0 10px rgba(244, 114, 182, 0.9)) drop-shadow(0 0 20px rgba(244, 114, 182, 0.7))' },
+                '100%': { filter: 'drop-shadow(0 0 5px rgba(96, 165, 250, 0.8)) drop-shadow(0 0 10px rgba(96, 165, 250, 0.6))' },
               },
               'subtle-pulse': {
                 '0%, 100%': { transform: 'scale(1)', opacity: '1' },
@@ -129,7 +130,23 @@
               'gleam': {
                 '0%': { transform: 'translateX(-150%) skewX(-20deg)' },
                 '100%': { transform: 'translateX(150%) skewX(-20deg)' },
-              }
+              },
+              'star-rise': {
+                '0%': {
+                  transform: 'translateY(0)',
+                  opacity: '0',
+                },
+                '20%': {
+                  opacity: '1',
+                },
+                '80%': {
+                  opacity: '1',
+                },
+                '100%': {
+                  transform: 'translateY(-30rem)',
+                  opacity: '0',
+                },
+              },
             }
           }
         }

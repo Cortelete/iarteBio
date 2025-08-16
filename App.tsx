@@ -9,7 +9,7 @@ import CatalogPage from './pages/CatalogPage';
 import PortfolioModal from './components/PortfolioModal';
 import RedirectModal from './components/RedirectModal';
 import BackgroundStars from './components/BackgroundStars';
-import ConstructionModal from './components/ConstructionModal';
+import GameRoomModal from './components/GameRoomModal';
 
 type NavigationTarget = {
   categoryName?: string;
@@ -19,7 +19,7 @@ const App: React.FC = () => {
   const [page, setPage] = useState<'home' | 'catalog'>('home');
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
-  const [isConstructionModalOpen, setIsConstructionModalOpen] = useState(false);
+  const [isGameRoomOpen, setIsGameRoomOpen] = useState(false);
   const [initialCatalogTarget, setInitialCatalogTarget] = useState<NavigationTarget | null>(null);
 
   const navigateTo = (targetPage: 'home' | 'catalog', target?: NavigationTarget) => {
@@ -38,8 +38,8 @@ const App: React.FC = () => {
   const openRedirectModal = () => setIsRedirectModalOpen(true);
   const closeRedirectModal = () => setIsRedirectModalOpen(false);
   
-  const openConstructionModal = () => setIsConstructionModalOpen(true);
-  const closeConstructionModal = () => setIsConstructionModalOpen(false);
+  const openGameRoom = () => setIsGameRoomOpen(true);
+  const closeGameRoom = () => setIsGameRoomOpen(false);
 
   return (
     <div className="relative bg-brand-dark text-brand-light min-h-screen">
@@ -55,7 +55,7 @@ const App: React.FC = () => {
               <HeroSection 
                 navigateTo={navigateTo} 
                 openPortfolio={openPortfolio}
-                openConstructionModal={openConstructionModal}
+                openGameRoom={openGameRoom}
               />
             </>
           )}
@@ -73,11 +73,9 @@ const App: React.FC = () => {
         message="Estamos te levando para nossa página de planos e soluções detalhadas. Aguarde um instante."
         redirectUrl="https://iarte.vercel.app/"
       />
-      <ConstructionModal
-        isOpen={isConstructionModalOpen}
-        onClose={closeConstructionModal}
-        title="Em Construção"
-        message="Nossa Sala de Jogos está sendo preparada. Volte em breve para conferir as novidades!"
+      <GameRoomModal
+        isOpen={isGameRoomOpen}
+        onClose={closeGameRoom}
       />
     </div>
   );

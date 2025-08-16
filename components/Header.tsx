@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirect
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-brand-dark/50 backdrop-blur-lg">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          <a href="#" onClick={(e) => handleNavClick(e, 'home')} className="text-xl sm:text-2xl font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+          <a href="#" onClick={(e) => handleNavClick(e, 'home')} className="text-xl sm:text-2xl font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan">
             InteligenciArte.IA
           </a>
           
