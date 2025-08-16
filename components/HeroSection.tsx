@@ -9,9 +9,10 @@ import { TikTokIcon } from './icons/TikTokIcon';
 interface HeroSectionProps {
   navigateTo: (page: 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
+  openConstructionModal: () => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openConstructionModal }) => {
 
   const handleCatalogClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
           Transformamos ideias em realidade digital com soluções criativas e tecnológicas que impulsionam o seu negócio.
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 w-full">
+        <div className="flex flex-wrap justify-center items-center gap-4 mb-8 w-full">
           <button
             onClick={handleCatalogClick}
             className="group w-full sm:w-auto relative inline-block text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
@@ -66,6 +67,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio }) 
               <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
             </span>
           </a>
+          <button
+            onClick={openConstructionModal}
+            className="group w-full sm:w-auto relative inline-block text-base sm:text-base font-semibold text-white py-2.5 px-6 sm:py-2.5 sm:px-7 rounded-full bg-gradient-to-r from-green-400 to-cyan-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 overflow-hidden animate-subtle-pulse"
+            style={{ animationDuration: '2s' }}
+          >
+            <span className="relative z-10">Sala de Jogos</span>
+            <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+              <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+            </span>
+          </button>
         </div>
 
         <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-10 w-full">
