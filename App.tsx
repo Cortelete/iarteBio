@@ -48,7 +48,7 @@ const App: React.FC = () => {
       <CursorGlow />
       
       <div className="relative z-10 flex flex-col min-h-screen">
-        <Header navigateTo={navigateTo} openPortfolio={openPortfolio} openRedirectModal={openRedirectModal} />
+        <Header navigateTo={navigateTo} openPortfolio={openPortfolio} openRedirectModal={openRedirectModal} openGameRoom={openGameRoom} />
         <main className="flex-grow">
           {page === 'home' && (
             <>
