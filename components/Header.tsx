@@ -10,9 +10,10 @@ interface HeaderProps {
   navigateTo: (page: 'home' | 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
   openRedirectModal: () => void;
+  openGameRoom: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirectModal }) => {
+const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirectModal, openGameRoom }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_CONTACT_MESSAGE}`;
 
@@ -29,6 +30,11 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirect
   const handleRedirectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     openRedirectModal();
+  };
+
+  const handleGameRoomClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    openGameRoom();
   };
 
   const handleMobileNav = (page: 'home' | 'catalog') => {
@@ -59,6 +65,10 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirect
                 <span>Planos</span>
                 <span className="absolute bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-pink-400 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </a>
+              <a href="#" onClick={handleGameRoomClick} className="relative text-brand-light hover:text-white transition-colors duration-300 py-2 group">
+                <span>Sala de Jogos</span>
+                <span className="absolute bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+              </a>
             </div>
 
             <div className="h-6 w-px bg-white/20 mx-4"></div>
@@ -81,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirect
           </div>
         </div>
       </header>
-      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navigateTo={handleMobileNav} openPortfolio={openPortfolio} openRedirectModal={openRedirectModal} />
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navigateTo={handleMobileNav} openPortfolio={openPortfolio} openRedirectModal={openRedirectModal} openGameRoom={openGameRoom} />
     </>
   );
 };
