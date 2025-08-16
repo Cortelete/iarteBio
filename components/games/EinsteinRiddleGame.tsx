@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronDownIcon } from '../icons/ChevronDownIcon';
 
 const CATEGORIES = ['Cor', 'Nacionalidade', 'Bebida', 'Cigarro', 'Animal'];
 const OPTIONS = {
@@ -95,10 +96,10 @@ const EinsteinRiddleGame: React.FC = () => {
             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">Teste de Einstein</h2>
             <p className="text-sm text-brand-gray mb-6 text-center max-w-2xl">Use as dicas para preencher a grade. A pergunta é: Quem é o dono do peixe?</p>
             
-            <div className="flex flex-col md:flex-row gap-8 w-full">
+            <div className="flex flex-col items-center gap-8 w-full">
                 {/* Grid */}
-                <div className="flex-1 overflow-x-auto scrollbar-custom">
-                    <div className="flex gap-2 min-w-[600px] md:min-w-full">
+                <div className="w-full overflow-x-auto scrollbar-custom">
+                    <div className="flex gap-2 min-w-[600px] md:min-w-full md:justify-center">
                         <div className="flex flex-col justify-end space-y-2 pt-8 text-right pr-2">
                             {CATEGORIES.map(cat => <div key={cat} className="h-10 flex items-center justify-end font-semibold text-sm">{cat}</div>)}
                         </div>
@@ -106,17 +107,21 @@ const EinsteinRiddleGame: React.FC = () => {
                             <div key={houseIndex} className="flex-1 flex flex-col items-center space-y-2 min-w-[100px]">
                                 <h3 className="font-bold text-center h-8">Casa #{houseIndex + 1}</h3>
                                 {(CATEGORIES as (keyof House)[]).map(category => (
-                                    <select
-                                        key={category}
-                                        value={house[category]}
-                                        onChange={(e) => handleSelectChange(houseIndex, category, e.target.value)}
-                                        className="w-full h-10 rounded-md bg-white/10 border border-white/20 p-2 text-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
-                                    >
-                                        <option className="bg-brand-dark text-brand-gray" value="">Selecione</option>
-                                        {getAvailableOptions(category, house[category]).map(opt => (
-                                            <option className="bg-brand-dark text-white" key={opt} value={opt}>{opt}</option>
-                                        ))}
-                                    </select>
+                                    <div key={category} className="relative w-full">
+                                        <select
+                                            value={house[category]}
+                                            onChange={(e) => handleSelectChange(houseIndex, category, e.target.value)}
+                                            className="w-full h-10 rounded-md bg-white/10 border border-white/20 pl-3 pr-8 text-sm focus:ring-2 focus:ring-purple-500 focus:outline-none appearance-none cursor-pointer"
+                                        >
+                                            <option className="bg-brand-dark text-brand-gray" value="">Selecione</option>
+                                            {getAvailableOptions(category, house[category]).map(opt => (
+                                                <option className="bg-brand-dark text-white" key={opt} value={opt}>{opt}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                            <ChevronDownIcon className="w-5 h-5 text-brand-gray" />
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         ))}
@@ -124,9 +129,9 @@ const EinsteinRiddleGame: React.FC = () => {
                 </div>
 
                 {/* Clues */}
-                <div className="w-full md:w-2/5 lg:w-1/3">
+                <div className="w-full max-w-4xl">
                     <h3 className="font-bold mb-2 text-center md:text-left">Dicas</h3>
-                    <ul className="text-sm text-brand-gray space-y-1.5 columns-1 md:columns-2 lg:columns-1">
+                    <ul className="text-sm text-brand-gray space-y-1.5 sm:columns-2 md:columns-3">
                         {CLUES.map((clue, index) => <li key={index} className="break-inside-avoid">{index + 1}. {clue}</li>)}
                     </ul>
                 </div>
