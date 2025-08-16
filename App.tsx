@@ -9,6 +9,7 @@ import CatalogPage from './pages/CatalogPage';
 import PortfolioModal from './components/PortfolioModal';
 import RedirectModal from './components/RedirectModal';
 import BackgroundStars from './components/BackgroundStars';
+import ConstructionModal from './components/ConstructionModal';
 
 type NavigationTarget = {
   categoryName?: string;
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   const [page, setPage] = useState<'home' | 'catalog'>('home');
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
+  const [isConstructionModalOpen, setIsConstructionModalOpen] = useState(false);
   const [initialCatalogTarget, setInitialCatalogTarget] = useState<NavigationTarget | null>(null);
 
   const navigateTo = (targetPage: 'home' | 'catalog', target?: NavigationTarget) => {
@@ -35,6 +37,9 @@ const App: React.FC = () => {
 
   const openRedirectModal = () => setIsRedirectModalOpen(true);
   const closeRedirectModal = () => setIsRedirectModalOpen(false);
+  
+  const openConstructionModal = () => setIsConstructionModalOpen(true);
+  const closeConstructionModal = () => setIsConstructionModalOpen(false);
 
   return (
     <div className="relative bg-brand-dark text-brand-light min-h-screen">
@@ -47,7 +52,11 @@ const App: React.FC = () => {
         <main className="flex-grow">
           {page === 'home' && (
             <>
-              <HeroSection navigateTo={navigateTo} openPortfolio={openPortfolio} />
+              <HeroSection 
+                navigateTo={navigateTo} 
+                openPortfolio={openPortfolio}
+                openConstructionModal={openConstructionModal}
+              />
             </>
           )}
           {page === 'catalog' && <CatalogPage navigateTo={navigateTo} initialTarget={initialCatalogTarget} />}
@@ -63,6 +72,12 @@ const App: React.FC = () => {
         title="Você está sendo redirecionado"
         message="Estamos te levando para nossa página de planos e soluções detalhadas. Aguarde um instante."
         redirectUrl="https://iarte.vercel.app/"
+      />
+      <ConstructionModal
+        isOpen={isConstructionModalOpen}
+        onClose={closeConstructionModal}
+        title="Em Construção"
+        message="Nossa Sala de Jogos está sendo preparada. Volte em breve para conferir as novidades!"
       />
     </div>
   );
