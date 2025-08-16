@@ -90,7 +90,7 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
           aria-modal="true"
         >
           <motion.div
-            className="relative w-full h-full max-w-6xl max-h-[95vh] bg-brand-dark/80 rounded-2xl border border-white/10 shadow-2xl shadow-purple-500/10 text-white flex flex-col overflow-hidden"
+            className="relative w-full h-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl max-h-[90vh] lg:max-h-[95vh] bg-brand-dark/80 rounded-2xl border border-white/10 shadow-2xl shadow-purple-500/10 text-white flex flex-col overflow-hidden"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -158,11 +158,11 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
                               </div>
                               
                               <div className={`absolute inset-0 z-0 opacity-20 group-hover:opacity-50 transition-opacity duration-300 bg-gradient-to-br ${game.color} bg-[length:200%_200%] group-hover:animate-gradient-pan`}></div>
-                              <div className={`relative h-full w-full bg-brand-dark/60 rounded-[7px] p-8 flex flex-col items-center justify-center gap-4 text-center`}>
+                              <div className={`relative h-full w-full bg-brand-dark/60 rounded-[7px] p-4 sm:p-6 flex flex-col items-center justify-center gap-2 sm:gap-4 text-center`}>
                                   <div className={`text-5xl text-gradient bg-gradient-to-br ${game.color}`}>
-                                      <Icon className="w-16 h-16 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
+                                      <Icon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
                                   </div>
-                                  <h3 className={`text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan`}>{game.name}</h3>
+                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan`}>{game.name}</h3>
                               </div>
                           </motion.button>
                         );
