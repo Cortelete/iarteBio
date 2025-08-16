@@ -44,25 +44,25 @@ const SubcategoryCard: React.FC<SubcategoryCardProps> = ({ subcategory, onOpenMo
         </div>
         
         {/* Content area */}
-        <div className="relative z-10 flex-1 p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col">
+        <div className="relative z-10 flex-1 p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col overflow-y-auto scrollbar-custom">
           <div className="flex-grow">
-            <h4 className="text-sm sm:text-base lg:text-lg font-bold text-center text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-2 sm:mb-3">{subcategory.name}</h4>
+            <h4 className="text-sm sm:text-base font-bold text-center text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-2 sm:mb-3">{subcategory.name}</h4>
             
             <div className="space-y-1 sm:space-y-2 lg:space-y-4">
               <div className="text-center">
                 <InfoIcon className="w-3 h-3 sm:w-4 sm:h-5 text-blue-400 mx-auto mb-1" />
                 <h5 className="font-semibold text-brand-light/80 text-[10px] sm:text-xs uppercase tracking-wider mb-0.5 sm:mb-1">O que é?</h5>
-                <p className="text-brand-gray text-xs sm:text-sm">{subcategory.whatIsIt}</p>
+                <p className="text-brand-gray text-xs">{subcategory.whatIsIt}</p>
               </div>
               <div className="text-center">
                 <TargetIcon className="w-3 h-3 sm:w-4 sm:h-5 text-purple-400 mx-auto mb-1" />
                 <h5 className="font-semibold text-brand-light/80 text-[10px] sm:text-xs uppercase tracking-wider mb-0.5 sm:mb-1">Para que serve?</h5>
-                <p className="text-brand-gray text-xs sm:text-sm">{subcategory.whatIsItFor}</p>
+                <p className="text-brand-gray text-xs">{subcategory.whatIsItFor}</p>
               </div>
               <div className="text-center">
                 <CheckCircleIcon className="w-3 h-3 sm:w-4 sm:h-5 text-pink-400 mx-auto mb-1" />
                 <h5 className="font-semibold text-brand-light/80 text-[10px] sm:text-xs uppercase tracking-wider mb-0.5 sm:mb-1">Como ajuda?</h5>
-                <p className="text-brand-gray text-xs sm:text-sm">{subcategory.howItHelps}</p>
+                <p className="text-brand-gray text-xs">{subcategory.howItHelps}</p>
               </div>
             </div>
           </div>
