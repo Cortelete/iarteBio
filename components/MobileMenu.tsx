@@ -12,9 +12,10 @@ interface MobileMenuProps {
   navigateTo: (page: 'home' | 'catalog') => void;
   openPortfolio: () => void;
   openRedirectModal: () => void;
+  openGameRoom: () => void;
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navigateTo, openPortfolio, openRedirectModal }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navigateTo, openPortfolio, openRedirectModal, openGameRoom }) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_CONTACT_MESSAGE}`;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, page: 'home' | 'catalog') => {
@@ -31,6 +32,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navigateTo, op
   const handleRedirectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     openRedirectModal();
+    onClose();
+  };
+
+  const handleGameRoomClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    openGameRoom();
     onClose();
   };
 
@@ -95,11 +102,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navigateTo, op
               >
                 Planos
               </motion.a>
+              <motion.a
+                href="#"
+                onClick={handleGameRoomClick}
+                className="text-2xl text-brand-light hover:text-white transition-colors"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { delay: 0.5 } }}
+              >
+                Sala de Jogos
+              </motion.a>
             </nav>
             
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1, transition: { delay: 0.5 } }}
+              animate={{ y: 0, opacity: 1, transition: { delay: 0.6 } }}
               className="mt-16 pt-8 border-t border-white/10 w-full max-w-xs flex justify-center gap-8"
             >
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-brand-light hover:text-white transition-colors duration-300">
