@@ -53,14 +53,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick, isActive
         
         {/* Top content: Title and Emoji */}
         <div className="relative z-10 text-center">
-          <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold leading-tight text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-1 sm:mb-2">{category.category}</h3>
+          <h3 className="text-sm sm:text-base md:text-lg font-bold leading-tight text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-1 sm:mb-2">{category.category}</h3>
           <span className="text-xl sm:text-2xl lg:text-3xl" role="img" aria-label={`${category.category} emoji`}>{category.emoji}</span>
         </div>
 
         {/* Key Indicators List */}
         <div className="relative z-10 space-y-0.5 text-left my-1 sm:my-2">
           {category.keyIndicators.map((indicator, index) => (
-            <div key={index} className="flex items-center gap-1.5 text-[11px] sm:text-xs lg:text-sm">
+            <div key={index} className="flex items-center gap-1.5 text-[11px] sm:text-xs">
               <CheckCircleIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-green-400 flex-shrink-0" />
               <span className="text-brand-gray flex-1 truncate" title={indicator.label}>{indicator.label}:</span>
               <span className="font-bold text-brand-light/90">{indicator.value}</span>
@@ -76,10 +76,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick, isActive
               const value = parseInt(metric.value.replace('%',''));
               return (
                 <div key={metric.label} className="w-1/3 flex flex-col-reverse items-center group/metric h-full">
-                  <span className="text-[10px] sm:text-xs lg:text-sm text-brand-gray mt-1 text-center leading-tight">{metric.label}</span>
+                  <span className="text-[10px] sm:text-xs text-brand-gray mt-1 text-center leading-tight">{metric.label}</span>
                   <IconComponent className="w-3 h-3 sm:w-4 lg:w-5 mt-1 sm:mt-2 text-brand-gray group-hover/metric:text-white transition-colors" />
                   <div className="relative w-full flex items-end justify-center flex-grow">
-                    <span className="absolute -top-4 text-[11px] sm:text-xs lg:text-sm font-bold text-white">{metric.value}</span>
+                    <span className="absolute -top-4 text-[11px] sm:text-xs font-bold text-white">{metric.value}</span>
                     <div 
                       className="w-3 sm:w-4 lg:w-5 bg-white/10 rounded-t-md"
                       style={{ height: `100%` }}
@@ -101,7 +101,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick, isActive
         
         {/* Bottom content: CTA */}
         <div className="relative z-10 text-center mt-1 sm:mt-2">
-            <span className="text-xs sm:text-sm lg:text-base font-semibold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 group-hover:brightness-125 transition-all">
+            <span className="text-xs sm:text-sm font-semibold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 group-hover:brightness-125 transition-all">
                 Ver Serviços &rarr;
             </span>
         </div>
