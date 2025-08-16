@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 const PongGame: React.FC = () => {
@@ -8,8 +7,8 @@ const PongGame: React.FC = () => {
     const isDragging = useRef(false);
 
     const gameState = useRef({
-        ball: { x: 200, y: 300, dx: 3, dy: 3, radius: 8 },
-        player: { x: 150, y: 575, width: 100, height: 15 },
+        ball: { x: 200, y: 250, dx: 3, dy: 3, radius: 8 },
+        player: { x: 150, y: 475, width: 100, height: 15 },
         ai: { x: 150, y: 10, width: 100, height: 15, speed: 2.5 },
         gameRunning: true,
     });
@@ -197,7 +196,7 @@ const PongGame: React.FC = () => {
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-            <div className="flex justify-around items-center w-full max-w-sm mb-2 p-2 bg-white/5 rounded-lg border border-white/10 text-center text-2xl font-bold">
+            <div className="flex justify-around items-center w-full max-w-sm mb-2 p-2 bg-white/5 rounded-lg border border-white/10 text-center text-xl sm:text-2xl font-bold">
                  <div className="w-1/2">
                     <span className="text-cyan-400">{scores.player}</span>
                  </div>
@@ -209,8 +208,8 @@ const PongGame: React.FC = () => {
             <canvas
                 ref={canvasRef}
                 width="400"
-                height="600"
-                className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full cursor-grab active:cursor-grabbing"
+                height="500"
+                className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full h-auto cursor-grab active:cursor-grabbing"
                 onClick={handleCanvasClick}
             />
             <p className="text-brand-gray text-sm text-center">Clique e <strong className="text-white">arraste o mouse</strong> ou <strong className="text-white">deslize o dedo</strong> para controlar. O primeiro a fazer 5 pontos vence.</p>
