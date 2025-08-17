@@ -18,6 +18,7 @@ import { AlienIcon } from './icons/AlienIcon';
 import { PongIcon } from './icons/PongIcon';
 import { HelmIcon } from './icons/HelmIcon';
 import { BrainIcon } from './icons/BrainIcon';
+import { PenToolIcon } from './icons/PenToolIcon';
 
 
 interface GameRoomModalProps {
@@ -35,6 +36,11 @@ const games = [
   { id: 'doom', name: 'Pixel Slayer', component: DoomLikeGame, icon: HelmIcon, color: 'from-amber-700 to-red-600', glow: 'shadow-red-600/50' },
   { id: 'einstein', name: 'Teste de Einstein', component: EinsteinRiddleGame, icon: BrainIcon, color: 'from-gray-300 to-blue-300', glow: 'shadow-blue-300/50' },
 ];
+
+const externalGames = [
+  { id: 'iapalavra', name: 'IA.Palavra', link: 'https://iapalavra.vercel.app/', icon: PenToolIcon, color: 'from-blue-300 to-sky-400', glow: 'shadow-sky-500/50' },
+];
+
 
 const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -167,6 +173,41 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
                           </motion.button>
                         );
                       })}
+                    </div>
+                    
+                    <div className="mt-10 pt-6 border-t border-white/10">
+                       <h3 className="text-xl font-bold text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-400 mb-6">Ferramentas & Jogos Externos</h3>
+                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                         {externalGames.map((game, index) => {
+                           const Icon = game.icon;
+                           return (
+                            <motion.a
+                                key={game.id}
+                                href={game.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`group relative rounded-lg p-px overflow-hidden transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl ${game.glow}`}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0, transition: { delay: (index + games.length) * 0.05 } }}
+                            >
+                              <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-[7px]">
+                                  <span className="absolute block w-1/2 h-[400%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                              </span>
+                              <div className="absolute inset-0 z-0 overflow-hidden rounded-[7px]">
+                                  <div className="absolute bottom-0 left-[30%] w-0.5 h-0.5 bg-white rounded-full animate-star-rise" style={{ animationDuration: '11s', animationDelay: '-3s' }}></div>
+                                  <div className="absolute bottom-0 left-[70%] w-1 h-1 bg-white rounded-full animate-star-rise" style={{ animationDuration: '9s', animationDelay: '-6s' }}></div>
+                              </div>
+                              <div className={`absolute inset-0 z-0 opacity-20 group-hover:opacity-50 transition-opacity duration-300 bg-gradient-to-br ${game.color} bg-[length:200%_200%] group-hover:animate-gradient-pan`}></div>
+                              <div className={`relative h-full w-full bg-brand-dark/60 rounded-[7px] p-4 sm:p-6 flex flex-col items-center justify-center gap-2 sm:gap-4 text-center`}>
+                                  <div className={`text-5xl text-gradient bg-gradient-to-br ${game.color}`}>
+                                      <Icon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
+                                  </div>
+                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan`}>{game.name}</h3>
+                              </div>
+                            </motion.a>
+                           );
+                         })}
+                       </div>
                     </div>
                   </motion.div>
                 ) : (
