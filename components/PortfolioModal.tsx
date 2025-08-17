@@ -10,6 +10,13 @@ interface PortfolioModalProps {
 
 const portfolioItems = [
   {
+    title: 'IA.Palavra',
+    category: 'Ferramenta de IA',
+    description: 'Uma ferramenta de IA para geração e análise de textos, otimizando a criação de conteúdo.',
+    image: '/IAPalavra.png',
+    link: 'https://iapalavra.vercel.app/'
+  },
+  {
     title: 'ToolBoxIA',
     category: 'Ferramenta de IA',
     description: 'Uma coleção de ferramentas de IA para otimizar tarefas diárias e aumentar a produtividade.',
