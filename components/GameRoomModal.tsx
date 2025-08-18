@@ -10,6 +10,8 @@ import SpaceInvadersGame from './games/SpaceInvadersGame';
 import PongGame from './games/PongGame';
 import DoomLikeGame from './games/DoomLikeGame';
 import EinsteinRiddleGame from './games/EinsteinRiddleGame';
+import BubbleShooterGame from './games/BubbleShooterGame';
+import BeachDefenderGame from './games/BeachDefenderGame';
 import { GamepadIcon } from './icons/GamepadIcon';
 import { SnakeIcon } from './icons/SnakeIcon';
 import { CardsIcon } from './icons/CardsIcon';
@@ -19,6 +21,8 @@ import { PongIcon } from './icons/PongIcon';
 import { HelmIcon } from './icons/HelmIcon';
 import { BrainIcon } from './icons/BrainIcon';
 import { PenToolIcon } from './icons/PenToolIcon';
+import { BubbleIcon } from './icons/BubbleIcon';
+import { CrosshairIcon } from './icons/CrosshairIcon';
 
 
 interface GameRoomModalProps {
@@ -28,7 +32,9 @@ interface GameRoomModalProps {
 
 const games = [
   { id: 'tictactoe', name: 'Jogo da Velha', component: TicTacToeGame, icon: (props: any) => <div {...props}>#</div>, color: 'from-cyan-400 to-blue-500', glow: 'shadow-cyan-500/50' },
+  { id: 'defender', name: 'Defensor da Praia', component: BeachDefenderGame, icon: CrosshairIcon, color: 'from-yellow-500 to-amber-600', glow: 'shadow-amber-500/50' },
   { id: 'snake', name: 'Jogo da Cobrinha', component: SnakeGame, icon: SnakeIcon, color: 'from-green-400 to-emerald-500', glow: 'shadow-green-500/50' },
+  { id: 'bubble', name: 'Canhão de Bolhas', component: BubbleShooterGame, icon: BubbleIcon, color: 'from-sky-400 to-indigo-500', glow: 'shadow-sky-500/50' },
   { id: 'flappy', name: 'Pássaro Saltitante', component: FlappyBirdGame, icon: BirdIcon, color: 'from-yellow-400 to-orange-500', glow: 'shadow-yellow-500/50' },
   { id: 'memory', name: 'Jogo da Memória', component: MemoryGame, icon: CardsIcon, color: 'from-purple-400 to-pink-500', glow: 'shadow-purple-500/50' },
   { id: 'invaders', name: 'Invasores do Espaço', component: SpaceInvadersGame, icon: AlienIcon, color: 'from-red-500 to-orange-500', glow: 'shadow-red-500/50' },

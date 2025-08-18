@@ -249,7 +249,7 @@ const SpaceInvadersGame: React.FC = () => {
                     ref={canvasRef}
                     width="600"
                     height="700"
-                    className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full"
+                    className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full h-auto"
                 />
                  {(!gameStarted || isGameOver) && (
                     <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center rounded-lg text-center cursor-pointer" onClick={handleCanvasClick}>

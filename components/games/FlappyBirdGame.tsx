@@ -211,7 +211,7 @@ const FlappyBirdGame: React.FC = () => {
                     ref={canvasRef}
                     width="600"
                     height="500"
-                    className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full"
+                    className="bg-brand-dark/50 rounded-lg border-2 border-white/10 max-w-full h-auto"
                 />
                 {isGameOver && (
                     <div 
