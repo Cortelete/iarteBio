@@ -46,8 +46,9 @@ const Header: React.FC<HeaderProps> = ({ navigateTo, openPortfolio, openRedirect
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-brand-dark/50 backdrop-blur-lg">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          <a href="#" onClick={(e) => handleNavClick(e, 'home')} className="text-xl sm:text-2xl font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan">
-            InteligenciArte.IA
+          <a href="#" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-2 sm:gap-3" aria-label="Página inicial InteligenciArte.IA">
+            <img src="/logo.png" alt="InteligenciArte.IA Logo" className="h-8 sm:h-10 w-auto filter drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
+            <span className="font-bold text-md sm:text-lg tracking-tight text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan">InteligenciArte.IA</span>
           </a>
           
           {/* Desktop Navigation */}

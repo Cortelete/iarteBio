@@ -8,8 +8,16 @@ const Footer: React.FC = () => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_CONTACT_MESSAGE}`;
 
   return (
-    <footer className="border-t border-white/10 py-6 bg-gradient-to-r from-brand-dark via-gray-900/50 to-brand-dark bg-[length:400%_400%] animate-gradient-pan">
+    <footer className="border-t border-white/10 py-8 bg-gradient-to-r from-brand-dark via-gray-900/50 to-brand-dark bg-[length:400%_400%] animate-gradient-pan">
       <div className="container mx-auto px-6 text-center text-brand-gray">
+        <div className="flex flex-col items-center justify-center mb-6">
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} aria-label="Voltar ao topo">
+            <img src="/logo.png" alt="InteligenciArte.IA Logo" className="h-10 w-auto transition-opacity hover:opacity-80" />
+          </a>
+          <h3 className="mt-3 text-xl font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan">
+            InteligenciArte.IA
+          </h3>
+        </div>
         <div className="flex justify-center items-center space-x-6 mb-4">
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">
             <WhatsAppIcon className="w-6 h-6" />
