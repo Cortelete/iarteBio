@@ -49,6 +49,9 @@ const games = [
 
 const externalGames = [
   { id: 'iapalavra', name: 'IA.Palavra', link: 'https://iapalavra.vercel.app/', icon: PenToolIcon, color: 'from-blue-300 to-sky-400', glow: 'shadow-sky-500/50' },
+  { id: 'toolboxia', name: 'ToolBoxIA', link: 'https://toolboxia.vercel.app/', icon: PenToolIcon, color: 'from-indigo-400 to-purple-500', glow: 'shadow-purple-500/50' },
+  { id: 'geracontrato', name: 'Gerador de Contratos', link: 'https://geracontrato.vercel.app/', icon: PenToolIcon, color: 'from-orange-400 to-yellow-500', glow: 'shadow-yellow-500/50' },
+  { id: 'geracomprovante', name: 'Gerador de Comprovantes', link: 'https://geranota.vercel.app/', icon: PenToolIcon, color: 'from-green-300 to-teal-400', glow: 'shadow-teal-500/50' },
 ];
 
 
@@ -178,7 +181,7 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
                                   <div className={`text-5xl text-gradient bg-gradient-to-br ${game.color}`}>
                                       <Icon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
                                   </div>
-                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan`}>{game.name}</h3>
+                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan text-center`}>{game.name}</h3>
                               </div>
                           </motion.button>
                         );
@@ -212,7 +215,7 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
                                   <div className={`text-5xl text-gradient bg-gradient-to-br ${game.color}`}>
                                       <Icon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
                                   </div>
-                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan`}>{game.name}</h3>
+                                  <h3 className={`text-lg sm:text-xl font-bold text-gradient bg-gradient-to-br ${game.color} bg-[length:200%_auto] animate-text-gradient-pan text-center`}>{game.name}</h3>
                               </div>
                             </motion.a>
                            );
