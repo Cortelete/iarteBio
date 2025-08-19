@@ -68,8 +68,20 @@ const BubbleShooterGame: React.FC = () => {
         
         const updateMousePos = (e: MouseEvent | TouchEvent) => {
             const rect = canvas.getBoundingClientRect();
-            const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-            const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+            let clientX, clientY;
+
+            if ('touches' in e && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else if ('changedTouches' in e && e.changedTouches.length > 0) { // For touchend
+                 clientX = e.changedTouches[0].clientX;
+                 clientY = e.changedTouches[0].clientY;
+            } else if ('clientX' in e) {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            } else {
+                return; // No coordinates
+            }
             
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
@@ -83,9 +95,27 @@ const BubbleShooterGame: React.FC = () => {
             state.current.mouse.angle = Math.max(-Math.PI + 0.1, Math.min(-0.1, angle));
         };
 
-        const handleShoot = (e: Event) => {
+        const handleInteractionStart = (e: MouseEvent | TouchEvent) => {
+            e.preventDefault();
+            if (gameStatus !== 'playing') {
+                initGame();
+                return;
+            }
+            updateMousePos(e);
+        };
+        
+        const handleInteractionMove = (e: MouseEvent | TouchEvent) => {
+            if (gameStatus !== 'playing') return;
+            e.preventDefault();
+            updateMousePos(e);
+        };
+
+        const handleInteractionEnd = (e: MouseEvent | TouchEvent) => {
             e.preventDefault();
             if (gameStatus === 'playing' && !state.current.projectile) {
+                // Aim one last time for tap events where there's no move
+                updateMousePos(e);
+
                 state.current.projectile = {
                     x: state.current.width / 2,
                     y: state.current.height - 30,
@@ -95,21 +125,25 @@ const BubbleShooterGame: React.FC = () => {
                 state.current.cannonBubble.color = state.current.nextBubble.color;
                 state.current.nextBubble.color = getRandomColor();
                 state.current.shotsSinceRowAdd++;
-            } else if (gameStatus !== 'playing') {
-                initGame();
             }
         };
 
-        canvas.addEventListener('mousemove', updateMousePos);
-        canvas.addEventListener('touchmove', updateMousePos, { passive: false });
-        canvas.addEventListener('mousedown', handleShoot);
-        canvas.addEventListener('touchstart', handleShoot, { passive: false });
+        canvas.addEventListener('mousedown', handleInteractionStart);
+        canvas.addEventListener('touchstart', handleInteractionStart, { passive: false });
+        
+        canvas.addEventListener('mousemove', handleInteractionMove);
+        canvas.addEventListener('touchmove', handleInteractionMove, { passive: false });
+
+        canvas.addEventListener('mouseup', handleInteractionEnd);
+        canvas.addEventListener('touchend', handleInteractionEnd, { passive: false });
 
         return () => {
-            canvas.removeEventListener('mousemove', updateMousePos);
-            canvas.removeEventListener('touchmove', updateMousePos);
-            canvas.removeEventListener('mousedown', handleShoot);
-            canvas.removeEventListener('touchstart', handleShoot);
+            canvas.removeEventListener('mousedown', handleInteractionStart);
+            canvas.removeEventListener('touchstart', handleInteractionStart);
+            canvas.removeEventListener('mousemove', handleInteractionMove);
+            canvas.removeEventListener('touchmove', handleInteractionMove);
+            canvas.removeEventListener('mouseup', handleInteractionEnd);
+            canvas.removeEventListener('touchend', handleInteractionEnd);
         };
     }, [gameStatus, initGame, getRandomColor]);
 
