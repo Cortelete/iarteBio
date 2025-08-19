@@ -11,15 +11,16 @@ const FlappyBirdGame: React.FC = () => {
     const gameState = useRef({
         bird: { x: 50, y: 150, width: 34, height: 24, velocity: 0 },
         pipes: [] as { x: number; y: number; width: number; height: number; passed: boolean; }[],
-        frame: 0,
+        pipeSpawnTimer: 0,
     });
 
     const gameConstants = {
-        gameSpeed: 1.5,
-        gravity: 0.18,
+        gameSpeed: 2.5,
+        gravity: 0.25,
         jump: -6,
         pipeWidth: 52,
         pipeGap: 240,
+        pipeSpawnInterval: 80, // Lower is more frequent
     };
 
     const startGame = useCallback(() => {
@@ -29,12 +30,12 @@ const FlappyBirdGame: React.FC = () => {
         gameState.current = {
             bird: { x: 50, y: canvas.height / 2, width: 34, height: 24, velocity: 0 },
             pipes: [],
-            frame: 0,
+            pipeSpawnTimer: gameConstants.pipeSpawnInterval,
         };
         setScore(0);
         setIsGameOver(false);
         setGameStarted(true);
-    }, []);
+    }, [gameConstants.pipeSpawnInterval]);
 
     const flap = useCallback(() => {
         if (gameStarted && !isGameOver) {
@@ -77,39 +78,48 @@ const FlappyBirdGame: React.FC = () => {
         if (!ctx || !canvas) return;
 
         let animationFrameId: number;
+        let lastTime = 0;
 
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
             if (!gameStarted || isGameOver) {
                 cancelAnimationFrame(animationFrameId);
                 return;
             }
+            if (!lastTime) {
+                lastTime = timestamp;
+            }
+            const deltaTime = (timestamp - lastTime) / 16.67; // Normalize to 60fps
+            lastTime = timestamp;
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const { bird, pipes } = gameState.current;
 
             // Bird physics
-            bird.velocity += gameConstants.gravity;
-            bird.y += bird.velocity;
+            bird.velocity += gameConstants.gravity * deltaTime;
+            bird.y += bird.velocity * deltaTime;
             
             if (bird.y < 0) { // Don't die at top
                 bird.y = 0;
                 bird.velocity = 0;
             }
 
-            if (bird.y + bird.height > canvas.height) { // Stop at ground
-                bird.y = canvas.height - bird.height;
-                bird.velocity = 0;
+            // Ground collision detection
+            if (bird.y + bird.height > canvas.height) {
+                setIsGameOver(true);
             }
             
             // Pipe generation and movement
-            if (gameState.current.frame % 100 === 0) {
+            gameState.current.pipeSpawnTimer += deltaTime;
+            if (gameState.current.pipeSpawnTimer >= gameConstants.pipeSpawnInterval) {
+                 gameState.current.pipeSpawnTimer = 0;
                 const pipeY = Math.random() * (canvas.height - gameConstants.pipeGap - 100) + 50;
                 pipes.push({ x: canvas.width, y: pipeY, width: gameConstants.pipeWidth, height: canvas.height, passed: false });
             }
 
+
             let newScore = score;
             pipes.forEach(pipe => {
-                pipe.x -= gameConstants.gameSpeed;
+                pipe.x -= gameConstants.gameSpeed * deltaTime;
 
                 if (!pipe.passed && pipe.x + pipe.width < bird.x) {
                     newScore++;
@@ -134,7 +144,6 @@ const FlappyBirdGame: React.FC = () => {
                 setScore(newScore);
             }
             gameState.current.pipes = pipes.filter(pipe => pipe.x + pipe.width > 0);
-            gameState.current.frame++;
 
             // Drawing
             drawPipes(ctx, canvas);

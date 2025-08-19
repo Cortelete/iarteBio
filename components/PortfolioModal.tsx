@@ -77,7 +77,7 @@ const portfolioItems = [
     category: 'Site Institucional',
     description: 'Website para uma nutricionista esportiva, com foco em agendamentos e apresentação de serviços.',
     image: '/BiedermannNutricao.png',
-    link: 'https://cortelete.github.io/syrlean/'
+    link: 'https://nutrisyr.vercel.app/'
   },
   {
     title: 'Gerador de Contratos',

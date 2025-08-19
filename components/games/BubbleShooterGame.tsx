@@ -37,7 +37,7 @@ const BubbleShooterGame: React.FC = () => {
     const getRandomColor = useCallback(() => {
         const availableColors = [...new Set(state.current.grid.map(b => b.color))];
         if (availableColors.length === 0) return COLORS[Math.floor(Math.random() * COLORS.length)];
-        return availableColors[Math.floor(Math.random() * availableColors.length)];
+        return availableColors[Math.floor(Math.random() * COLORS.length)];
     }, []);
 
     const initGame = useCallback(() => {
@@ -154,6 +154,7 @@ const BubbleShooterGame: React.FC = () => {
         if (!ctx || !canvas || gameStatus !== 'playing') return;
 
         let animationFrameId: number;
+        let lastTime = 0;
 
         const getBubbleAt = (row: number, col: number) => state.current.grid.find(b => b.row === row && b.col === col);
         const getNeighbors = (row: number, col: number) => {
@@ -264,11 +265,11 @@ const BubbleShooterGame: React.FC = () => {
             });
         };
 
-        const update = () => {
+        const update = (deltaTime: number) => {
             if (state.current.projectile) {
                 const proj = state.current.projectile;
-                proj.x += Math.cos(proj.angle) * 10;
-                proj.y += Math.sin(proj.angle) * 10;
+                proj.x += Math.cos(proj.angle) * 10 * deltaTime;
+                proj.y += Math.sin(proj.angle) * 10 * deltaTime;
 
                 if (proj.x - BUBBLE_RADIUS < 0 || proj.x + BUBBLE_RADIUS > state.current.width) proj.angle = Math.PI - proj.angle;
                 if (proj.y - BUBBLE_RADIUS < 0) {
@@ -288,7 +289,7 @@ const BubbleShooterGame: React.FC = () => {
                 }
             }
              state.current.particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.life--;
+                p.x += p.vx * deltaTime; p.y += p.vy * deltaTime; p.life -= deltaTime;
                 if(p.life <= 0) state.current.particles.splice(i, 1);
             });
         };
@@ -339,12 +340,16 @@ const BubbleShooterGame: React.FC = () => {
             });
         };
 
-        const gameLoop = () => {
-            update();
+        const gameLoop = (timestamp: number) => {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
+            update(deltaTime);
             draw();
             if (gameStatus === 'playing') animationFrameId = requestAnimationFrame(gameLoop);
         };
-        gameLoop();
+        gameLoop(0);
 
         return () => cancelAnimationFrame(animationFrameId);
     }, [gameStatus, getRandomColor]);
@@ -380,7 +385,7 @@ const BubbleShooterGame: React.FC = () => {
                     </div>
                 )}
             </div>
-            <p className="text-brand-gray text-sm text-center">Mire com o <strong className="text-white">mouse/dedo</strong> e clique/toque para atirar.</p>
+            <p className="text-brand-gray text-sm text-center">Mire com o <strong className="text-white">mouse/dedo</strong> e solte para atirar.</p>
         </div>
     );
 };

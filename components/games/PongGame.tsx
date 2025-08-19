@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 const PongGame: React.FC = () => {
@@ -102,8 +103,13 @@ const PongGame: React.FC = () => {
         if (!ctx || !canvas) return;
         
         let animationFrameId: number;
+        let lastTime = 0;
 
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
             if (!gameState.current.gameRunning) {
                 ctx.fillStyle = 'rgba(10, 10, 10, 0.7)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -113,6 +119,7 @@ const PongGame: React.FC = () => {
                 ctx.fillText(`${winner} Venceu!`, canvas.width / 2, canvas.height / 2 - 30);
                 ctx.font = '20px "Poppins", sans-serif';
                 ctx.fillText('Clique para jogar novamente', canvas.width / 2, canvas.height / 2 + 20);
+                animationFrameId = requestAnimationFrame(gameLoop);
                 return;
             }
 
@@ -128,8 +135,8 @@ const PongGame: React.FC = () => {
             ctx.setLineDash([]);
             
             const { ball, player, ai } = gameState.current;
-            ball.x += ball.dx;
-            ball.y += ball.dy;
+            ball.x += ball.dx * deltaTime;
+            ball.y += ball.dy * deltaTime;
 
             if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
                 ball.dx *= -1;
@@ -144,16 +151,16 @@ const PongGame: React.FC = () => {
                 resetBall(1);
             }
 
-            if (ball.y + ball.radius > player.y && ball.x > player.x && ball.x < player.x + player.width) {
+            if (ball.y + ball.radius > player.y && ball.x > player.x && ball.x < player.x + player.width && ball.dy > 0) {
                 ball.dy = -Math.abs(ball.dy) * 1.02;
             }
-            if (ball.y - ball.radius < ai.y + ai.height && ball.x > ai.x && ball.x < ai.x + ai.width) {
+            if (ball.y - ball.radius < ai.y + ai.height && ball.x > ai.x && ball.x < ai.x + ai.width && ball.dy < 0) {
                 ball.dy = Math.abs(ball.dy) * 1.02;
             }
 
             const aiCenter = ai.x + ai.width / 2;
-            if (aiCenter < ball.x - 10) ai.x += ai.speed;
-            else if (aiCenter > ball.x + 10) ai.x -= ai.speed;
+            if (aiCenter < ball.x - 10) ai.x += ai.speed * deltaTime;
+            else if (aiCenter > ball.x + 10) ai.x -= ai.speed * deltaTime;
 
             player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
             ai.x = Math.max(0, Math.min(canvas.width - ai.width, ai.x));
@@ -172,7 +179,7 @@ const PongGame: React.FC = () => {
             animationFrameId = requestAnimationFrame(gameLoop);
         };
 
-        gameLoop();
+        gameLoop(0);
         return () => cancelAnimationFrame(animationFrameId);
     }, [winner, resetBall]);
     

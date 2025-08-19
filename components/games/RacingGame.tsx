@@ -79,8 +79,13 @@ const RacingGame: React.FC = () => {
         if (!ctx || !canvas) return;
 
         let animationFrameId: number;
+        let lastTime = 0;
         
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
             // Update logic
             const { cars, keys, touch } = gameData.current;
 
@@ -93,12 +98,12 @@ const RacingGame: React.FC = () => {
                     const braking = (keys['ArrowDown'] || touch.brake) ? 0.08 : 0;
                     const turn = (keys['ArrowLeft'] || touch.left) ? -0.05 : (keys['ArrowRight'] || touch.right) ? 0.05 : 0;
                     
-                    car.speed += acceleration;
-                    car.speed -= braking;
-                    if (Math.abs(turn) > 0 && car.speed > 1) car.speed *= 0.99; // Turning friction
+                    car.speed += acceleration * deltaTime;
+                    car.speed -= braking * deltaTime;
+                    if (Math.abs(turn) > 0 && car.speed > 1) car.speed *= Math.pow(0.99, deltaTime); // Turning friction
                 
                     if (car.speed !== 0) {
-                        car.angle += turn * (car.speed / 4);
+                        car.angle += turn * (car.speed / 4) * deltaTime;
                     }
                 } else { // AI Logic
                     const targetNodeIndex = car.targetNode!;
@@ -109,7 +114,7 @@ const RacingGame: React.FC = () => {
                     while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
                     while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
                     
-                    car.angle += Math.sign(angleDiff) * 0.06;
+                    car.angle += Math.sign(angleDiff) * 0.06 * deltaTime;
 
                     // AI speed control based on upcoming turn
                     const nextNodeIndex = (targetNodeIndex + 1) % trackNodes.length;
@@ -119,7 +124,7 @@ const RacingGame: React.FC = () => {
                     const turnSeverity = Math.abs(nextAngle - currentSegmentAngle);
 
                     const targetSpeed = turnSeverity > 1 ? 2.0 : 3.5;
-                    car.speed += (targetSpeed - car.speed) * 0.1;
+                    car.speed += (targetSpeed - car.speed) * 0.1 * deltaTime;
                     
                     const distToTarget = Math.hypot(target.x - car.x, target.y - car.y);
                     if (distToTarget < 60) {
@@ -127,12 +132,11 @@ const RacingGame: React.FC = () => {
                     }
                 }
 
-                car.speed *= 0.98; // Friction
+                car.speed *= Math.pow(0.98, deltaTime); // Friction
 
                 // Track Boundary Collision
                 let minDistance = Infinity;
                 let closestPoint = { x: 0, y: 0 };
-                let currentSegment = { p1: {x:0, y:0}, p2: {x:0, y:0} };
 
                 for (let i = 0; i < trackNodes.length; i++) {
                     const p1 = trackNodes[i];
@@ -142,22 +146,21 @@ const RacingGame: React.FC = () => {
                     if (dist < minDistance) {
                         minDistance = dist;
                         closestPoint = point;
-                        currentSegment = { p1, p2 };
                     }
                 }
                 
                 if (minDistance > trackWidth / 2) {
                     onTrack = false;
-                    car.speed *= 0.9; // Penalty for being off-track
+                    car.speed *= Math.pow(0.9, deltaTime); // Penalty for being off-track
                     // Push car back towards the track
                     const pushAngle = Math.atan2(closestPoint.y - car.y, closestPoint.x - car.x);
-                    car.x += Math.cos(pushAngle);
-                    car.y += Math.sin(pushAngle);
+                    car.x += Math.cos(pushAngle) * deltaTime;
+                    car.y += Math.sin(pushAngle) * deltaTime;
                 }
 
                 // Apply movement
-                car.x += Math.sin(car.angle) * car.speed;
-                car.y -= Math.cos(car.angle) * car.speed;
+                car.x += Math.sin(car.angle) * car.speed * deltaTime;
+                car.y -= Math.cos(car.angle) * car.speed * deltaTime;
                 car.totalTime = Date.now() - gameData.current.startTime;
 
                 // Lap tracking
@@ -249,7 +252,7 @@ const RacingGame: React.FC = () => {
                 ctx.font = '20px "Poppins"';
                 ctx.textAlign = 'left';
                 ctx.fillText(`Velocidade: ${(playerCar.speed * 20).toFixed(0)} km/h`, 20, 30);
-                ctx.fillText(`Volta: ${Math.min(playerCar.lap, totalLaps)} / ${totalLaps}`, 20, 60);
+                ctx.fillText(`Volta: ${Math.min(playerCar.lap + 1, totalLaps)} / ${totalLaps}`, 20, 60);
                 ctx.textAlign = 'right';
                 ctx.fillText(`Posição: ${playerPosition} / ${cars.length}`, canvas.width - 20, 30);
                 const totalTime = new Date(playerCar.totalTime).toISOString().substr(14, 8);
@@ -259,7 +262,7 @@ const RacingGame: React.FC = () => {
 
             animationFrameId = requestAnimationFrame(gameLoop);
         };
-        gameLoop();
+        gameLoop(0);
         return () => cancelAnimationFrame(animationFrameId);
     }, [gameState]);
 

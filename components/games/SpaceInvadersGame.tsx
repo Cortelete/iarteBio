@@ -136,13 +136,19 @@ const SpaceInvadersGame: React.FC = () => {
 
         gameState.current.player.y = canvas.height - 50;
         let animationFrameId: number;
+        let lastTime = 0;
         
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
             animationFrameId = requestAnimationFrame(gameLoop);
+            
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             gameState.current.particles.forEach((p, index) => {
-                p.x += p.vx; p.y += p.vy; p.life--;
+                p.x += p.vx * deltaTime; p.y += p.vy * deltaTime; p.life -= deltaTime;
                 if (p.life <= 0) gameState.current.particles.splice(index, 1);
                 else {
                     ctx.globalAlpha = p.life / 40; ctx.fillStyle = p.color; ctx.shadowColor = p.color; ctx.shadowBlur = 5;
@@ -161,8 +167,8 @@ const SpaceInvadersGame: React.FC = () => {
             }
 
             const { player, keys } = gameState.current;
-            if (keys['ArrowLeft'] && player.x > 0) player.x -= 5;
-            if (keys['ArrowRight'] && player.x < canvas.width - player.width) player.x += 5;
+            if (keys['ArrowLeft'] && player.x > 0) player.x -= 5 * deltaTime;
+            if (keys['ArrowRight'] && player.x < canvas.width - player.width) player.x += 5 * deltaTime;
 
             player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
 
@@ -170,14 +176,14 @@ const SpaceInvadersGame: React.FC = () => {
             ctx.fillRect(player.x, player.y, player.width, player.height); ctx.shadowBlur = 0;
 
             gameState.current.bullets.forEach((bullet, index) => {
-                bullet.y -= 7;
+                bullet.y -= 7 * deltaTime;
                 ctx.fillStyle = '#FFFFFF'; ctx.shadowColor = '#FFFFFF'; ctx.shadowBlur = 8;
                 ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height); ctx.shadowBlur = 0;
                 if (bullet.y < 0) gameState.current.bullets.splice(index, 1);
             });
 
             gameState.current.alienBullets.forEach((bullet, index) => {
-                bullet.y += 5;
+                bullet.y += 5 * deltaTime;
                 ctx.fillStyle = '#FF4500'; ctx.shadowColor = '#FF4500'; ctx.shadowBlur = 8;
                 ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height); ctx.shadowBlur = 0;
                 if (bullet.y > canvas.height) gameState.current.alienBullets.splice(index, 1);
@@ -185,11 +191,11 @@ const SpaceInvadersGame: React.FC = () => {
 
             let edgeReached = false;
             gameState.current.aliens.forEach(alien => {
-                alien.x += gameState.current.alienDirection * gameState.current.alienSpeed;
+                alien.x += gameState.current.alienDirection * gameState.current.alienSpeed * deltaTime;
                 if (alien.x <= 0 || alien.x >= canvas.width - alien.width) edgeReached = true;
                 ctx.fillStyle = '#7FFF00'; ctx.shadowColor = '#7FFF00'; ctx.shadowBlur = 10;
                 ctx.fillRect(alien.x, alien.y, alien.width, alien.height); ctx.shadowBlur = 0;
-                if (Math.random() < 0.0008) {
+                if (Math.random() < 0.0008 * deltaTime) {
                     gameState.current.alienBullets.push({ x: alien.x + alien.width / 2 - 2, y: alien.y + alien.height, width: 4, height: 10 });
                 }
             });
@@ -223,7 +229,7 @@ const SpaceInvadersGame: React.FC = () => {
 
             if (gameState.current.aliens.length === 0) { setIsGameOver(true); setGameMessage('Você Venceu!'); }
         };
-        gameLoop();
+        gameLoop(0);
         return () => cancelAnimationFrame(animationFrameId);
     }, [isGameOver, gameStarted, resetGame]);
 

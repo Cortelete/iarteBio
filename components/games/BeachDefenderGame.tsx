@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 // Game Constants
@@ -146,8 +147,13 @@ const BeachDefenderGame: React.FC = () => {
         const ctx = canvas?.getContext('2d');
         if (!ctx) return;
         let animationFrameId: number;
+        let lastTime = 0;
 
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
             // --- UPDATE ---
             const now = Date.now();
             const { player, bullets, enemies, grenades, particles, crosshair, isMobile } = state.current;
@@ -179,12 +185,12 @@ const BeachDefenderGame: React.FC = () => {
             }
             
             bullets.forEach((b, i) => {
-                b.x += b.vx; b.y += b.vy; b.life--;
+                b.x += b.vx * deltaTime; b.y += b.vy * deltaTime; b.life -= deltaTime;
                 if(b.life <= 0) bullets.splice(i, 1);
             });
             
             enemies.forEach((e, i) => {
-                e.y += e.speed;
+                e.y += e.speed * deltaTime;
                 const perspectiveScale = 0.1 + (e.y - HORIZON_Y) / (BARRICADE_Y - HORIZON_Y) * 1.5;
                 e.scale = Math.max(0.1, perspectiveScale);
 
@@ -208,8 +214,8 @@ const BeachDefenderGame: React.FC = () => {
             });
 
             grenades.forEach((g, i) => {
-                g.x += g.vx; g.y += g.vy; g.vy += 0.15;
-                g.rotation += g.rotationSpeed;
+                g.x += g.vx * deltaTime; g.y += g.vy * deltaTime; g.vy += 0.15 * deltaTime;
+                g.rotation += g.rotationSpeed * deltaTime;
                 if(g.y > BARRICADE_Y) {
                     grenades.splice(i, 1);
                     player.health -= 25;
@@ -320,7 +326,7 @@ const BeachDefenderGame: React.FC = () => {
             }
             
             particles.forEach((p) => {
-                p.x += p.vx; p.y += p.vy; p.life--;
+                p.x += p.vx * deltaTime; p.y += p.vy * deltaTime; p.life -= deltaTime;
                 ctx.globalAlpha = Math.max(0, p.life / 60);
                 ctx.fillStyle = p.color;
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI); ctx.fill();
@@ -373,7 +379,7 @@ const BeachDefenderGame: React.FC = () => {
             animationFrameId = requestAnimationFrame(gameLoop);
         };
 
-        gameLoop();
+        gameLoop(0);
         return () => cancelAnimationFrame(animationFrameId);
     }, [gameStatus, kills, highScore, resetGame, spawnWave, createExplosion]);
 

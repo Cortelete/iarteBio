@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 type GameObject = { x: number; y: number; width: number; height: number; };
@@ -169,14 +170,19 @@ const DoomLikeGame: React.FC = () => {
         const ctx = canvas?.getContext('2d');
         if (!ctx || !canvas) return;
         let animationFrameId: number;
+        let lastTime = 0;
 
-        const gameLoop = () => {
+        const gameLoop = (timestamp: number) => {
             animationFrameId = requestAnimationFrame(gameLoop);
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = (timestamp - lastTime) / 16.67;
+            lastTime = timestamp;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Draw Particles
             gameState.current.particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.life--;
+                p.x += p.vx * deltaTime; p.y += p.vy * deltaTime; p.life -= deltaTime;
                 if (p.life <= 0) gameState.current.particles.splice(i, 1);
                 else {
                     ctx.globalAlpha = p.life / 50; ctx.fillStyle = p.color;
@@ -204,8 +210,8 @@ const DoomLikeGame: React.FC = () => {
 
             const moveMagnitude = Math.sqrt(moveX * moveX + moveY * moveY);
             if (moveMagnitude > 0) {
-                player.x += (moveX / moveMagnitude) * player.speed;
-                player.y += (moveY / moveMagnitude) * player.speed;
+                player.x += (moveX / moveMagnitude) * player.speed * deltaTime;
+                player.y += (moveY / moveMagnitude) * player.speed * deltaTime;
             }
 
             player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
@@ -240,7 +246,7 @@ const DoomLikeGame: React.FC = () => {
 
             // Update & Draw Bullets
             bullets.forEach((b, i) => {
-                b.x += b.dx; b.y += b.dy; b.life--;
+                b.x += b.dx * deltaTime; b.y += b.dy * deltaTime; b.life -= deltaTime;
                 if (b.life <= 0) bullets.splice(i, 1);
                 ctx.fillStyle = '#00FFFF';
                 ctx.beginPath(); ctx.arc(b.x, b.y, 3, 0, Math.PI * 2); ctx.fill();
@@ -249,8 +255,8 @@ const DoomLikeGame: React.FC = () => {
             // Update & Draw Enemies
             enemies.forEach((enemy, i) => {
                 const angleToPlayer = Math.atan2((player.y + player.height/2) - (enemy.y + enemy.height/2), (player.x+player.width/2) - (enemy.x+enemy.width/2));
-                enemy.x += Math.cos(angleToPlayer) * enemy.speed;
-                enemy.y += Math.sin(angleToPlayer) * enemy.speed;
+                enemy.x += Math.cos(angleToPlayer) * enemy.speed * deltaTime;
+                enemy.y += Math.sin(angleToPlayer) * enemy.speed * deltaTime;
                 
                 ctx.fillStyle = '#ff4500';
                 ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
@@ -276,7 +282,7 @@ const DoomLikeGame: React.FC = () => {
 
             enemies.forEach((enemy) => {
                 if (player.x < enemy.x + enemy.width && player.x + player.width > enemy.x && player.y < enemy.y + enemy.height && player.y + player.height > enemy.y) {
-                    player.health -= 1;
+                    player.health -= 1 * deltaTime;
                 }
             });
 
@@ -301,7 +307,7 @@ const DoomLikeGame: React.FC = () => {
 
             // Draw HUD
             ctx.fillStyle = 'white'; ctx.font = '20px "Poppins"'; ctx.textAlign = 'left';
-            ctx.fillText(`Saúde: ${player.health}`, 10, 30);
+            ctx.fillText(`Saúde: ${Math.ceil(player.health)}`, 10, 30);
             ctx.textAlign = 'center';
             ctx.fillText(`Pontuação: ${score}`, canvas.width / 2, 30);
             ctx.textAlign = 'right';
@@ -326,7 +332,7 @@ const DoomLikeGame: React.FC = () => {
             }
         };
 
-        gameLoop();
+        gameLoop(0);
         return () => cancelAnimationFrame(animationFrameId);
     }, [isGameOver, gameStarted, resetGame]);
 
