@@ -49,9 +49,6 @@ const games = [
 
 const externalGames = [
   { id: 'iapalavra', name: 'IA.Palavra', link: 'https://iapalavra.vercel.app/', icon: PenToolIcon, color: 'from-blue-300 to-sky-400', glow: 'shadow-sky-500/50' },
-  { id: 'toolboxia', name: 'ToolBoxIA', link: 'https://toolboxia.vercel.app/', icon: PenToolIcon, color: 'from-indigo-400 to-purple-500', glow: 'shadow-purple-500/50' },
-  { id: 'geracontrato', name: 'Gerador de Contratos', link: 'https://geracontrato.vercel.app/', icon: PenToolIcon, color: 'from-orange-400 to-yellow-500', glow: 'shadow-yellow-500/50' },
-  { id: 'geracomprovante', name: 'Gerador de Comprovantes', link: 'https://geranota.vercel.app/', icon: PenToolIcon, color: 'from-green-300 to-teal-400', glow: 'shadow-teal-500/50' },
 ];
 
 
@@ -189,7 +186,7 @@ const GameRoomModal: React.FC<GameRoomModalProps> = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div className="mt-10 pt-6 border-t border-white/10">
-                       <h3 className="text-xl font-bold text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-400 mb-6">Ferramentas & Jogos Externos</h3>
+                       <h3 className="text-xl font-bold text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-400 mb-6">Jogos Externos</h3>
                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                          {externalGames.map((game, index) => {
                            const Icon = game.icon;
