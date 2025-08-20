@@ -43,7 +43,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
               Transformamos ideias em realidade digital com soluções criativas e tecnológicas que impulsionam o seu negócio.
             </p>
 
-            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center items-center gap-[clamp(0.5rem,2cqi,0.8rem)] mb-[clamp(1rem,4cqi,1.75rem)] w-full max-w-sm sm:max-w-none mx-auto">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center items-center gap-[clamp(0.5rem,2cqi,0.8rem)] mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto">
               <button
                 onClick={handleCatalogClick}
                 className="group relative w-full sm:w-auto inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.4rem,1.5cqi,0.6rem)] px-[clamp(0.8rem,3cqi,1.6rem)] rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
@@ -85,31 +85,43 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
               </button>
             </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-[clamp(0.4rem,1.5cqi,0.7rem)] mb-[clamp(1.25rem,5cqi,2.25rem)] w-full">
-              <button
-                onClick={() => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
-              >
-                Flyers e Cartões
-              </button>
-              <button
-                onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
-              >
-                Link na Bio
-              </button>
-              <button
-                onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
-              >
-                Site com Catálogo
-              </button>
-              <button
-                onClick={() => navigateTo('catalog', { categoryName: 'Automação' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
-              >
-                Automações
-              </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] mb-[clamp(1.25rem,5cqi,2.25rem)] w-full max-w-sm sm:max-w-3xl mx-auto">
+                <button
+                    onClick={() => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' })}
+                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
+                >
+                    <span className="relative z-10">Flyers e Cartões</span>
+                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                    </span>
+                </button>
+                <button
+                    onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
+                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden"
+                >
+                    <span className="relative z-10">Link na Bio</span>
+                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                    </span>
+                </button>
+                <button
+                    onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
+                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 overflow-hidden"
+                >
+                    <span className="relative z-10">Site com Catálogo</span>
+                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                    </span>
+                </button>
+                <button
+                    onClick={() => navigateTo('catalog', { categoryName: 'Automação' })}
+                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 overflow-hidden"
+                >
+                    <span className="relative z-10">Automações</span>
+                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                    </span>
+                </button>
             </div>
             
             <div className="flex items-center gap-[clamp(0.75rem,3cqi,1.25rem)]">
