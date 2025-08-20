@@ -11,6 +11,7 @@ import RedirectModal from './components/RedirectModal';
 import BackgroundStars from './components/BackgroundStars';
 import GameRoomModal from './components/GameRoomModal';
 import ToolsModal from './components/ToolsModal';
+import ExternalGamesModal from './components/ExternalGamesModal';
 
 type NavigationTarget = {
   categoryName?: string;
@@ -22,6 +23,7 @@ const App: React.FC = () => {
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
   const [isGameRoomOpen, setIsGameRoomOpen] = useState(false);
   const [isToolsModalOpen, setIsToolsModalOpen] = useState(false);
+  const [isExternalGamesModalOpen, setIsExternalGamesModalOpen] = useState(false);
   const [initialCatalogTarget, setInitialCatalogTarget] = useState<NavigationTarget | null>(null);
 
   const navigateTo = (targetPage: 'home' | 'catalog', target?: NavigationTarget) => {
@@ -46,6 +48,9 @@ const App: React.FC = () => {
   const openToolsModal = () => setIsToolsModalOpen(true);
   const closeToolsModal = () => setIsToolsModalOpen(false);
 
+  const openExternalGamesModal = () => setIsExternalGamesModalOpen(true);
+  const closeExternalGamesModal = () => setIsExternalGamesModalOpen(false);
+
   return (
     <div className="relative bg-brand-dark text-brand-light min-h-screen">
       <BackgroundStars />
@@ -53,7 +58,14 @@ const App: React.FC = () => {
       <CursorGlow />
       
       <div className="relative z-10 flex flex-col min-h-screen">
-        <Header navigateTo={navigateTo} openPortfolio={openPortfolio} openRedirectModal={openRedirectModal} openGameRoom={openGameRoom} />
+        <Header 
+          navigateTo={navigateTo} 
+          openPortfolio={openPortfolio} 
+          openRedirectModal={openRedirectModal} 
+          openGameRoom={openGameRoom}
+          openToolsModal={openToolsModal}
+          openExternalGamesModal={openExternalGamesModal}
+        />
         <main className="flex-grow">
           {page === 'home' && (
             <>
@@ -63,6 +75,7 @@ const App: React.FC = () => {
                 openGameRoom={openGameRoom}
                 openRedirectModal={openRedirectModal}
                 openToolsModal={openToolsModal}
+                openExternalGamesModal={openExternalGamesModal}
               />
             </>
           )}
@@ -85,6 +98,7 @@ const App: React.FC = () => {
         onClose={closeGameRoom}
       />
       <ToolsModal isOpen={isToolsModalOpen} onClose={closeToolsModal} />
+      <ExternalGamesModal isOpen={isExternalGamesModalOpen} onClose={closeExternalGamesModal} />
     </div>
   );
 };

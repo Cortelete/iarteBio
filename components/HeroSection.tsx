@@ -13,6 +13,7 @@ interface HeroSectionProps {
   openGameRoom: () => void;
   openRedirectModal: () => void;
   openToolsModal: () => void;
+  openExternalGamesModal: () => void;
 }
 
 const MenuButton = ({ label, onClick, isOpen }: { label: string; onClick: () => void; isOpen: boolean; }) => (
@@ -39,20 +40,8 @@ const MenuButton = ({ label, onClick, isOpen }: { label: string; onClick: () => 
     </motion.button>
 );
 
-const DirectActionButton = ({ label, onClick, icon: Icon }: { label: string; onClick: () => void; icon?: React.ElementType }) => (
-    <motion.button
-        onClick={onClick}
-        className="group relative w-full sm:w-auto flex items-center justify-center gap-2 text-[clamp(0.9rem,3cqi,1.1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.8rem)] px-[clamp(1rem,4cqi,2rem)] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.98 }}
-    >
-        {Icon && <Icon className="w-5 h-5" />}
-        <span className="relative z-10">{label}</span>
-    </motion.button>
-);
 
-
-const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom, openRedirectModal, openToolsModal }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom, openRedirectModal, openToolsModal, openExternalGamesModal }) => {
   const [openMenuGroup, setOpenMenuGroup] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -124,6 +113,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
       { label: "Automações", action: () => navigateTo('catalog', { categoryName: 'Automação' }) },
   ];
 
+  const salaDeJogosButtons = [
+    { label: "Jogos Aqui", action: openGameRoom },
+    { label: "Jogos Externos", action: openExternalGamesModal },
+  ];
+
   const subButtonStyle = "group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 transition-all duration-300 transform hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden text-center";
 
   return (
@@ -152,7 +146,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
 
             <div
                 ref={menuRef}
-                className="flex flex-col sm:flex-row items-start justify-center mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto gap-[clamp(0.5rem,2cqi,0.8rem)]"
+                className="flex flex-col sm:flex-row items-center justify-center mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto gap-[clamp(0.8rem,3cqi,1.2rem)]"
             >
                 {/* Conheça Mais Group */}
                 <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
@@ -220,10 +214,38 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
                     </AnimatePresence>
                 </motion.div>
 
-                {/* Direct Action Button */}
-                <div className="w-full sm:w-auto">
-                    <DirectActionButton label="Sala de Jogos" onClick={openGameRoom} icon={GamepadIcon} />
-                </div>
+                {/* Sala de Jogos Group */}
+                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
+                     <MenuButton label="Sala de Jogos" onClick={() => handleToggle('jogos')} isOpen={openMenuGroup === 'jogos'} />
+                     <AnimatePresence>
+                        {openMenuGroup === 'jogos' && (
+                            <motion.div
+                                 key="jogos-menu"
+                                 variants={containerVariants}
+                                 initial="closed"
+                                 animate="open"
+                                 exit="closed"
+                                 className="grid grid-cols-2 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-xs mx-auto overflow-hidden"
+                            >
+                                 {salaDeJogosButtons.map((btn, i) => (
+                                    <motion.button
+                                        key={i}
+                                        onClick={btn.action}
+                                        variants={itemVariants}
+                                        className={subButtonStyle}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                      <span className="relative z-10">{btn.label}</span>
+                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                                      </span>
+                                    </motion.button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </div>
             
             <div className="flex items-center gap-[clamp(0.75rem,3cqi,1.25rem)]">
