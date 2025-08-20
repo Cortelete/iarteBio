@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { InstagramIcon } from './icons/InstagramIcon';
 import { LinkedInIcon } from './icons/LinkedInIcon';
 import { TikTokIcon } from './icons/TikTokIcon';
@@ -10,14 +11,120 @@ interface HeroSectionProps {
   navigateTo: (page: 'catalog', target?: { categoryName?: string }) => void;
   openPortfolio: () => void;
   openGameRoom: () => void;
+  openRedirectModal: () => void;
+  openToolsModal: () => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom }) => {
+const MenuButton = ({ label, onClick, isOpen }: { label: string; onClick: () => void; isOpen: boolean; }) => (
+    <motion.button
+        onClick={onClick}
+        className="group relative w-full sm:w-auto inline-block text-[clamp(0.9rem,3cqi,1.1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.8rem)] px-[clamp(1rem,4cqi,2rem)] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+        animate={isOpen ? 'open' : 'closed'}
+        whileHover={{ scale: isOpen ? 1.1 : 1.05 }}
+        variants={{
+            closed: { 
+                scale: 1, 
+                boxShadow: '0 0 0px rgba(167, 139, 250, 0)',
+                filter: 'drop-shadow(0 0 0px rgba(167, 139, 250, 0))',
+            },
+            open: { 
+                scale: 1.1, 
+                boxShadow: '0 0 25px rgba(167, 139, 250, 0.5)',
+                filter: 'drop-shadow(0 0 8px rgba(167, 139, 250, 0.6))',
+            },
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+        <span className="relative z-10">{label}</span>
+    </motion.button>
+);
 
-  const handleCatalogClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    e.preventDefault();
-    navigateTo('catalog');
-  }
+const DirectActionButton = ({ label, onClick, icon: Icon }: { label: string; onClick: () => void; icon?: React.ElementType }) => (
+    <motion.button
+        onClick={onClick}
+        className="group relative w-full sm:w-auto flex items-center justify-center gap-2 text-[clamp(0.9rem,3cqi,1.1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.8rem)] px-[clamp(1rem,4cqi,2rem)] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
+    >
+        {Icon && <Icon className="w-5 h-5" />}
+        <span className="relative z-10">{label}</span>
+    </motion.button>
+);
+
+
+const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom, openRedirectModal, openToolsModal }) => {
+  const [openMenuGroup, setOpenMenuGroup] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenuGroup(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
+
+  const handleToggle = (group: string) => {
+    setOpenMenuGroup(prev => (prev === group ? null : group));
+  };
+  
+  const containerVariants = {
+    open: {
+        opacity: 1,
+        height: 'auto',
+        transition: {
+            staggerChildren: 0.07,
+            delayChildren: 0.1,
+            when: "beforeChildren",
+        },
+    },
+    closed: {
+        opacity: 0,
+        height: 0,
+        transition: {
+            staggerChildren: 0.05,
+            staggerDirection: -1,
+            when: "afterChildren",
+        },
+    },
+  };
+
+  const itemVariants = {
+    open: {
+        y: 0,
+        opacity: 1,
+        transition: {
+            y: { stiffness: 1000, velocity: -100 },
+        },
+    },
+    closed: {
+        y: 20,
+        opacity: 0,
+        transition: {
+            y: { stiffness: 1000 },
+        },
+    },
+  };
+  
+  const conhecaMaisButtons = [
+    { label: "Catálogo", action: () => navigateTo('catalog') },
+    { label: "Planos", action: openRedirectModal },
+    { label: "Portfólio", action: openPortfolio },
+    { label: "Ferramentas", action: openToolsModal },
+  ];
+
+  const queridinhosButtons = [
+      { label: "Flyers e Cartões", action: () => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' }) },
+      { label: "Link na Bio", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
+      { label: "Site com Catálogo", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
+      { label: "Automações", action: () => navigateTo('catalog', { categoryName: 'Automação' }) },
+  ];
+
+  const subButtonStyle = "group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 transition-all duration-300 transform hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden text-center";
 
   return (
     <section className="min-h-screen flex items-center justify-center relative pt-16 sm:pt-24 pb-12 sm:pb-16 px-4">
@@ -43,85 +150,80 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
               Transformamos ideias em realidade digital com soluções criativas e tecnológicas que impulsionam o seu negócio.
             </p>
 
-            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center items-center gap-[clamp(0.5rem,2cqi,0.8rem)] mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto">
-              <button
-                onClick={handleCatalogClick}
-                className="group relative w-full sm:w-auto inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.4rem,1.5cqi,0.6rem)] px-[clamp(0.8rem,3cqi,1.6rem)] rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
-              >
-                <span className="relative z-10">Catálogo</span>
-                <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                  <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                </span>
-              </button>
-              <button
-                onClick={openPortfolio}
-                className="group relative w-full sm:w-auto inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.4rem,1.5cqi,0.6rem)] px-[clamp(0.8rem,3cqi,1.6rem)] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden"
-              >
-                <span className="relative z-10">Portfólio</span>
-                <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                  <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                </span>
-              </button>
-              <a
-                href="https://iarte.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative w-full sm:w-auto inline-block text-center text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.4rem,1.5cqi,0.6rem)] px-[clamp(0.8rem,3cqi,1.6rem)] rounded-full bg-gradient-to-r from-pink-500 to-orange-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 overflow-hidden"
-              >
-                <span className="relative z-10">Planos</span>
-                <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                  <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                </span>
-              </a>
-              <button
-                onClick={openGameRoom}
-                className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-[clamp(0.25rem,1cqi,0.5rem)] text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.4rem,1.5cqi,0.6rem)] px-[clamp(0.8rem,3cqi,1.6rem)] rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 bg-[length:200%_auto] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-pink-500/40 hover:shadow-xl hover:shadow-red-500/50 overflow-hidden animate-[colorful-gradient-pan_4s_ease_infinite,subtle-pulse_2.5s_cubic-bezier(0.4,0,0.6,1)_infinite]"
-              >
-                <GamepadIcon className="w-[clamp(1.1rem,2.6cqi,1.5rem)] h-[clamp(1.1rem,2.6cqi,1.5rem)] transition-transform group-hover:rotate-[-15deg] duration-300" />
-                <span className="relative z-10">Sala de Jogos</span>
-                <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                  <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                </span>
-              </button>
-            </div>
+            <div
+                ref={menuRef}
+                className="flex flex-col sm:flex-row items-start justify-center mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto gap-[clamp(0.5rem,2cqi,0.8rem)]"
+            >
+                {/* Conheça Mais Group */}
+                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
+                    <MenuButton label="Conheça mais" onClick={() => handleToggle('conheca')} isOpen={openMenuGroup === 'conheca'} />
+                    <AnimatePresence>
+                        {openMenuGroup === 'conheca' && (
+                            <motion.div
+                                key="conheca-menu"
+                                variants={containerVariants}
+                                initial="closed"
+                                animate="open"
+                                exit="closed"
+                                className="grid grid-cols-2 sm:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-4xl mx-auto overflow-hidden"
+                            >
+                                {conhecaMaisButtons.map((btn, i) => (
+                                    <motion.button
+                                        key={i}
+                                        onClick={btn.action}
+                                        variants={itemVariants}
+                                        className={subButtonStyle}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                      <span className="relative z-10">{btn.label}</span>
+                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                                      </span>
+                                    </motion.button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] mb-[clamp(1.25rem,5cqi,2.25rem)] w-full max-w-sm sm:max-w-3xl mx-auto">
-                <button
-                    onClick={() => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' })}
-                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
-                >
-                    <span className="relative z-10">Flyers e Cartões</span>
-                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                    </span>
-                </button>
-                <button
-                    onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden"
-                >
-                    <span className="relative z-10">Link na Bio</span>
-                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                    </span>
-                </button>
-                <button
-                    onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30 overflow-hidden"
-                >
-                    <span className="relative z-10">Site com Catálogo</span>
-                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                    </span>
-                </button>
-                <button
-                    onClick={() => navigateTo('catalog', { categoryName: 'Automação' })}
-                    className="group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 overflow-hidden"
-                >
-                    <span className="relative z-10">Automações</span>
-                    <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                    </span>
-                </button>
+                {/* Queridinhos Group */}
+                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
+                     <MenuButton label="Queridinhos" onClick={() => handleToggle('queridinhos')} isOpen={openMenuGroup === 'queridinhos'} />
+                     <AnimatePresence>
+                        {openMenuGroup === 'queridinhos' && (
+                            <motion.div
+                                 key="queridinhos-menu"
+                                 variants={containerVariants}
+                                 initial="closed"
+                                 animate="open"
+                                 exit="closed"
+                                 className="grid grid-cols-2 sm:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-4xl mx-auto overflow-hidden"
+                            >
+                                 {queridinhosButtons.map((btn, i) => (
+                                    <motion.button
+                                        key={i}
+                                        onClick={btn.action}
+                                        variants={itemVariants}
+                                        className={subButtonStyle}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                      <span className="relative z-10">{btn.label}</span>
+                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                                      </span>
+                                    </motion.button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+
+                {/* Direct Action Button */}
+                <div className="w-full sm:w-auto">
+                    <DirectActionButton label="Sala de Jogos" onClick={openGameRoom} icon={GamepadIcon} />
+                </div>
             </div>
             
             <div className="flex items-center gap-[clamp(0.75rem,3cqi,1.25rem)]">
