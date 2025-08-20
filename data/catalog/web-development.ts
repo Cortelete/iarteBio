@@ -41,11 +41,11 @@ export const webDevelopmentCategory: CatalogCategoryRaw = {
         ]
       },
       { 
-        name: "Site Personalizado Simples", 
+        name: "Site com Catálogo", 
         image: "SPS.png", 
-        whatIsIt: "Um site institucional de até 5 páginas para apresentar sua empresa.", 
-        whatIsItFor: "Empresas que precisam de uma presença online profissional e informativa.", 
-        howItHelps: "Constrói credibilidade e serve como um portfólio digital acessível 24/7. *Nenhum plano inclui backend.",
+        whatIsIt: "Um site para exibir seus produtos ou serviços em um catálogo online elegante e fácil de navegar.", 
+        whatIsItFor: "Negócios que querem apresentar seu portfólio de forma profissional, sem a complexidade de um e-commerce completo.", 
+        howItHelps: "Facilita a visualização dos seus produtos/serviços, gera interesse e atua como uma vitrine digital 24/7. *Nenhum plano inclui backend para vendas diretas.",
         productionTime: "Varia por plano",
         plans: [
             { name: "Básicas", price: 555, description: "R$55 por atualização, ou R$55 mensal com plano de 6 meses. Prazo: 15-30 Dias úteis." },
