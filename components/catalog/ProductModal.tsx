@@ -135,7 +135,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                       className="block w-full mb-6 rounded-lg overflow-hidden relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-brand-dark"
                     >
                       <img 
-                          src={`/${product.image}`} 
+                          src={`/public/${product.image}`} 
                           alt={`Imagem para ${product.name}`} 
                           className="w-full h-40 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105" 
                       />
@@ -277,7 +277,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
         <ImageViewer 
           isOpen={isImageViewerOpen}
           onClose={() => setIsImageViewerOpen(false)}
-          imageUrl={`/${product.image}`}
+          imageUrl={`/public/${product.image}`}
         />
       )}
     </>
