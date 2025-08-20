@@ -88,25 +88,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
             <div className="flex flex-wrap justify-center items-center gap-[clamp(0.4rem,1.5cqi,0.7rem)] mb-[clamp(1.25rem,5cqi,2.25rem)] w-full">
               <button
                 onClick={() => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
               >
                 Flyers e Cartões
               </button>
               <button
                 onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
               >
                 Link na Bio
               </button>
               <button
                 onClick={() => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
               >
-                Site Simples
+                Site com Catálogo
               </button>
               <button
                 onClick={() => navigateTo('catalog', { categoryName: 'Automação' })}
-                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-gray bg-white/5 border border-white/10 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="text-[clamp(0.7rem,2.2cqi,0.85rem)] font-medium text-brand-light bg-purple-500/10 border border-purple-500/30 rounded-full py-[clamp(0.2rem,1cqi,0.35rem)] px-[clamp(0.6rem,2.5cqi,1.1rem)] hover:bg-purple-500/20 hover:border-purple-500/60 transition-all duration-300 shadow-sm shadow-purple-500/10 hover:shadow-md hover:shadow-purple-500/20"
               >
                 Automações
               </button>
