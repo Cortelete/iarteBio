@@ -10,6 +10,7 @@ import PortfolioModal from './components/PortfolioModal';
 import RedirectModal from './components/RedirectModal';
 import BackgroundStars from './components/BackgroundStars';
 import GameRoomModal from './components/GameRoomModal';
+import ToolsModal from './components/ToolsModal';
 
 type NavigationTarget = {
   categoryName?: string;
@@ -20,6 +21,7 @@ const App: React.FC = () => {
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
   const [isRedirectModalOpen, setIsRedirectModalOpen] = useState(false);
   const [isGameRoomOpen, setIsGameRoomOpen] = useState(false);
+  const [isToolsModalOpen, setIsToolsModalOpen] = useState(false);
   const [initialCatalogTarget, setInitialCatalogTarget] = useState<NavigationTarget | null>(null);
 
   const navigateTo = (targetPage: 'home' | 'catalog', target?: NavigationTarget) => {
@@ -41,6 +43,9 @@ const App: React.FC = () => {
   const openGameRoom = () => setIsGameRoomOpen(true);
   const closeGameRoom = () => setIsGameRoomOpen(false);
 
+  const openToolsModal = () => setIsToolsModalOpen(true);
+  const closeToolsModal = () => setIsToolsModalOpen(false);
+
   return (
     <div className="relative bg-brand-dark text-brand-light min-h-screen">
       <BackgroundStars />
@@ -56,6 +61,8 @@ const App: React.FC = () => {
                 navigateTo={navigateTo} 
                 openPortfolio={openPortfolio}
                 openGameRoom={openGameRoom}
+                openRedirectModal={openRedirectModal}
+                openToolsModal={openToolsModal}
               />
             </>
           )}
@@ -77,6 +84,7 @@ const App: React.FC = () => {
         isOpen={isGameRoomOpen}
         onClose={closeGameRoom}
       />
+      <ToolsModal isOpen={isToolsModalOpen} onClose={closeToolsModal} />
     </div>
   );
 };
