@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { CloseIcon } from './icons/CloseIcon';
 import { ArrowUpRightIcon } from './icons/ArrowUpRightIcon';
@@ -13,119 +14,119 @@ const portfolioItems = [
     title: 'IA.Palavra',
     category: 'Ferramenta de IA',
     description: 'Uma ferramenta de IA para geração e análise de textos, otimizando a criação de conteúdo.',
-    image: '/public/IAPalavra.png',
+    image: '/IAPalavra.png',
     link: 'https://iapalavra.vercel.app/'
   },
   {
     title: 'ToolBoxIA',
     category: 'Ferramenta de IA',
     description: 'Uma coleção de ferramentas de IA para otimizar tarefas diárias e aumentar a produtividade.',
-    image: '/public/ToolBoxIA.png',
+    image: '/ToolBoxIA.png',
     link: 'https://toolboxia.vercel.app/'
   },
   {
     title: 'Gestão de Automação',
     category: 'Automação & Processos',
     description: 'Landing page para serviços de automação, focada em otimização de processos para empresas.',
-    image: '/public/GestaoAutomacao.png',
+    image: '/GestaoAutomacao.png',
     link: 'https://cortelete.carrd.co/'
   },
   {
     title: 'Planos e Soluções Digitais',
     category: 'Consultoria Digital',
     description: 'Site apresentando um portfólio completo de soluções digitais e planos de serviço.',
-    image: '/public/PlanosSolucoes.png',
+    image: '/PlanosSolucoes.png',
     link: 'https://iarte.vercel.app/'
   },
   {
     title: 'Clube do Estudante',
     category: 'Comunidade & Educação',
     description: 'Plataforma para estudantes, oferecendo recursos, descontos e uma comunidade de apoio.',
-    image: '/public/ClubeEstudante.png',
+    image: '/ClubeEstudante.png',
     link: 'https://cortelete.github.io/CDE/'
   },
   {
     title: 'VetJaqs',
     category: 'Saúde & Web App',
     description: 'Aplicação web para uma clínica veterinária, facilitando agendamentos e comunicação.',
-    image: '/public/VetJaqs.png',
+    image: '/VetJaqs.png',
     link: 'http://vetjaqs.vercel.app/'
   },
   {
     title: 'Dr. Darany Advogado',
     category: 'Site Institucional',
     description: 'Site profissional para um escritório de advocacia, projetado para transmitir confiança e credibilidade.',
-    image: '/public/DrDarany.png',
+    image: '/DrDarany.png',
     link: 'https://drdarany.vercel.app/'
   },
   {
     title: 'Apresentação BPMN',
     category: 'Apresentação Interativa',
     description: 'Apresentação interativa sobre Business Process Model and Notation (BPMN).',
-    image: '/public/ApresentacaoBPMN.png',
+    image: '/ApresentacaoBPMN.png',
     link: 'https://cortelete.github.io/apresentacaoBPMN/'
   },
   {
     title: 'CardMasters',
     category: 'Jogo Web',
     description: 'Um jogo de cartas simples desenvolvido como um projeto experimental de desenvolvimento web.',
-    image: '/public/CardMasters.png',
+    image: '/CardMasters.png',
     link: 'https://cortelete.github.io/CardGame1/'
   },
   {
     title: 'Biedermann Nutrição',
     category: 'Site Institucional',
     description: 'Website para uma nutricionista esportiva, com foco em agendamentos e apresentação de serviços.',
-    image: '/public/BiedermannNutricao.png',
+    image: '/BiedermannNutricao.png',
     link: 'https://nutrisyr.vercel.app/'
   },
   {
     title: 'Gerador de Contratos',
     category: 'Ferramenta Web',
     description: 'Aplicação para gerar contratos personalizados de forma rápida e segura.',
-    image: '/public/GeradorContratos.png',
+    image: '/GeradorContratos.png',
     link: 'https://geracontrato.vercel.app/'
   },
   {
     title: 'Gerador de Comprovantes',
     category: 'Ferramenta Web',
     description: 'Ferramenta simples para a criação de comprovantes de transação ou serviço.',
-    image: '/public/GeradorComprovantes.png',
+    image: '/GeradorComprovantes.png',
     link: 'https://geranota.vercel.app/'
   },
   {
     title: 'Catálogo Luxury Studio',
     category: 'Catálogo Digital',
     description: 'Catálogo de serviços digital e interativo para o Luxury Studio, com agendamento integrado.',
-    image: '/public/CatalogoLuxury.png',
+    image: '/CatalogoLuxury.png',
     link: 'https://catalogolux.vercel.app/'
   },
   {
     title: 'Caramella Chocolates',
     category: 'E-commerce',
     description: 'E-commerce para uma marca de chocolates artesanais, com foco em uma experiência de compra doce e intuitiva.',
-    image: '/public/CaramellaChocolates.png',
+    image: '/CaramellaChocolates.png',
     link: 'https://caramellabio.vercel.app/'
   },
   {
     title: 'Link na Bio - Luxury',
     category: 'Link na Bio',
     description: 'Página de Link na Bio personalizada para o Luxury Studio, agregando todos os canais de contato.',
-    image: '/public/LinkBioLuxury.png',
+    image: '/LinkBioLuxury.png',
     link: 'https://luxbio.vercel.app/'
   },
   {
     title: 'LuxAcademy',
     category: 'Cursos Online',
     description: 'Plataforma de cursos online para a LuxAcademy, especializada em Lash Design.',
-    image: '/public/LuxAcademy.png',
+    image: '/LuxAcademy.png',
     link: 'http://luxacademy.vercel.app/'
   },
   {
     title: 'LK Luiza Kruppa',
     category: 'Influencer & Branding',
     description: 'Website para uma influenciadora digital, focando em branding pessoal e parcerias.',
-    image: '/public/LKLuizaKruppa.png',
+    image: '/LKLuizaKruppa.png',
     link: 'https://lkruppa.vercel.app/'
   },
 ];

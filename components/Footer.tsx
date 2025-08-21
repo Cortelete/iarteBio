@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6 text-center text-brand-gray">
         <div className="flex flex-col items-center justify-center mb-6">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} aria-label="Voltar ao topo">
-            <img src="/public/logo.png" alt="InteligenciArte.IA Logo" className="h-10 w-auto transition-opacity hover:opacity-80" />
+            <img src="/logo.png" alt="InteligenciArte.IA Logo" className="h-10 w-auto transition-opacity hover:opacity-80" />
           </a>
           <h3 className="mt-3 text-xl font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan">
             InteligenciArte.IA

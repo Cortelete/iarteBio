@@ -126,10 +126,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
         className="hero-container relative z-10 w-full max-w-3xl mx-auto opacity-0 animate-fade-in-up bg-brand-dark/40 backdrop-blur-lg border border-white/10 rounded-[clamp(0.5rem,2.08cqi,1rem)] p-[clamp(1.25rem,5cqi,2.5rem)] text-center flex flex-col items-center shadow-2xl shadow-purple-900/20 overflow-hidden"
         style={{ animationDelay: '100ms' }}
       >
-        <img src="/public/logo.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
+        <img src="/logo.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
         <div className="relative z-10 flex flex-col items-center">
             <div className="mb-[clamp(1.5rem,6cqi,3rem)]">
-              <img src="/public/logo.png" alt="InteligenciArte.IA" className="h-[clamp(8rem,40cqi,20rem)] w-auto mx-auto filter drop-shadow-[0_0_clamp(1rem,5cqi,2.5rem)_rgba(167,139,250,0.7)]" />
+              <img src="/logo.png" alt="InteligenciArte.IA" className="h-[clamp(8rem,40cqi,20rem)] w-auto mx-auto filter drop-shadow-[0_0_clamp(1rem,5cqi,2.5rem)_rgba(167,139,250,0.7)]" />
             </div>
 
             <h1 className="text-[clamp(1.5rem,7cqi,3.5rem)] font-bold text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-[length:200%_auto] animate-text-gradient-pan mb-[clamp(0.25rem,1.04cqi,0.5rem)] pb-[clamp(0.25rem,1.04cqi,0.5rem)]">
