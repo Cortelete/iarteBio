@@ -34,7 +34,7 @@ const MenuButton = ({ label, onClick, isOpen }: { label: string; onClick: () => 
                 filter: 'drop-shadow(0 0 8px rgba(167, 139, 250, 0.6))',
             },
         }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
         <span className="relative z-10">{label}</span>
     </motion.button>
@@ -42,7 +42,7 @@ const MenuButton = ({ label, onClick, isOpen }: { label: string; onClick: () => 
 
 
 const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, openGameRoom, openRedirectModal, openToolsModal, openExternalGamesModal }) => {
-  const [openMenuGroup, setOpenMenuGroup] = useState<string | null>(null);
+  const [openMenuGroup, setOpenMenuGroup] = useState<'conheca' | 'queridinhos' | 'jogos' | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
     };
   }, [menuRef]);
 
-  const handleToggle = (group: string) => {
+  const handleToggle = (group: 'conheca' | 'queridinhos' | 'jogos') => {
     setOpenMenuGroup(prev => (prev === group ? null : group));
   };
   
@@ -99,26 +99,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
     },
   };
   
-  const conhecaMaisButtons = [
-    { label: "Catálogo", action: () => navigateTo('catalog') },
-    { label: "Planos", action: openRedirectModal },
-    { label: "Portfólio", action: openPortfolio },
-    { label: "Ferramentas", action: openToolsModal },
-  ];
+  const subButtonGroups = {
+    conheca: [
+        { label: "Catálogo", action: () => navigateTo('catalog') },
+        { label: "Planos", action: openRedirectModal },
+        { label: "Portfólio", action: openPortfolio },
+        { label: "Ferramentas", action: openToolsModal },
+    ],
+    queridinhos: [
+        { label: "Flyers e Cartões", action: () => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' }) },
+        { label: "Link na Bio", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
+        { label: "Site com Catálogo", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
+        { label: "Automações", action: () => navigateTo('catalog', { categoryName: 'Automação' }) },
+    ],
+    jogos: [
+        { label: "Jogos Aqui", action: openGameRoom },
+        { label: "Jogos Externos", action: openExternalGamesModal },
+    ]
+  };
 
-  const queridinhosButtons = [
-      { label: "Flyers e Cartões", action: () => navigateTo('catalog', { categoryName: 'Design e Identidade Visual' }) },
-      { label: "Link na Bio", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
-      { label: "Site com Catálogo", action: () => navigateTo('catalog', { categoryName: 'Desenvolvimento Web' }) },
-      { label: "Automações", action: () => navigateTo('catalog', { categoryName: 'Automação' }) },
-  ];
-
-  const salaDeJogosButtons = [
-    { label: "Jogos Aqui", action: openGameRoom },
-    { label: "Jogos Externos", action: openExternalGamesModal },
-  ];
-
-  const subButtonStyle = "group relative w-full inline-block text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 transition-all duration-300 transform hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden text-center";
+  const subButtonStyle = "group relative flex-shrink-0 w-48 text-center text-[clamp(0.8rem,2.5cqi,1rem)] font-semibold text-white py-[clamp(0.5rem,2cqi,0.7rem)] px-4 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 transition-all duration-300 transform hover:shadow-lg hover:shadow-pink-500/30 overflow-hidden";
 
   return (
     <section className="min-h-screen flex items-center justify-center relative pt-16 sm:pt-24 pb-12 sm:pb-16 px-4">
@@ -144,108 +144,43 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigateTo, openPortfolio, op
               Transformamos ideias em realidade digital com soluções criativas e tecnológicas que impulsionam o seu negócio.
             </p>
 
-            <div
-                ref={menuRef}
-                className="flex flex-col sm:flex-row items-center justify-center mb-[clamp(1.25rem,5cqi,2.5rem)] w-full max-w-sm sm:max-w-none mx-auto gap-[clamp(0.8rem,3cqi,1.2rem)]"
-            >
-                {/* Conheça Mais Group */}
-                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
-                    <MenuButton label="Conheça mais" onClick={() => handleToggle('conheca')} isOpen={openMenuGroup === 'conheca'} />
-                    <AnimatePresence>
-                        {openMenuGroup === 'conheca' && (
-                            <motion.div
-                                key="conheca-menu"
-                                variants={containerVariants}
-                                initial="closed"
-                                animate="open"
-                                exit="closed"
-                                className="grid grid-cols-2 sm:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-4xl mx-auto overflow-hidden"
-                            >
-                                {conhecaMaisButtons.map((btn, i) => (
-                                    <motion.button
-                                        key={i}
-                                        onClick={btn.action}
-                                        variants={itemVariants}
-                                        className={subButtonStyle}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                      <span className="relative z-10">{btn.label}</span>
-                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                                      </span>
-                                    </motion.button>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </motion.div>
+            <div ref={menuRef} className="w-full flex flex-col items-center gap-4 mb-[clamp(1.25rem,5cqi,2.5rem)]">
+              {/* Main Buttons Row */}
+              <div className="flex flex-col sm:flex-row items-center justify-center w-full max-w-sm sm:max-w-none mx-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
+                  <MenuButton label="Conheça mais" onClick={() => handleToggle('conheca')} isOpen={openMenuGroup === 'conheca'} />
+                  <MenuButton label="Queridinhos" onClick={() => handleToggle('queridinhos')} isOpen={openMenuGroup === 'queridinhos'} />
+                  <MenuButton label="Sala de Jogos" onClick={() => handleToggle('jogos')} isOpen={openMenuGroup === 'jogos'} />
+              </div>
 
-                {/* Queridinhos Group */}
-                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
-                     <MenuButton label="Queridinhos" onClick={() => handleToggle('queridinhos')} isOpen={openMenuGroup === 'queridinhos'} />
-                     <AnimatePresence>
-                        {openMenuGroup === 'queridinhos' && (
-                            <motion.div
-                                 key="queridinhos-menu"
-                                 variants={containerVariants}
-                                 initial="closed"
-                                 animate="open"
-                                 exit="closed"
-                                 className="grid grid-cols-2 sm:grid-cols-4 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-4xl mx-auto overflow-hidden"
-                            >
-                                 {queridinhosButtons.map((btn, i) => (
-                                    <motion.button
-                                        key={i}
-                                        onClick={btn.action}
-                                        variants={itemVariants}
-                                        className={subButtonStyle}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                      <span className="relative z-10">{btn.label}</span>
-                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                                      </span>
-                                    </motion.button>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </motion.div>
-
-                {/* Sala de Jogos Group */}
-                <motion.div layout className="flex flex-col items-center w-full sm:w-auto gap-[clamp(0.8rem,3cqi,1.2rem)]">
-                     <MenuButton label="Sala de Jogos" onClick={() => handleToggle('jogos')} isOpen={openMenuGroup === 'jogos'} />
-                     <AnimatePresence>
-                        {openMenuGroup === 'jogos' && (
-                            <motion.div
-                                 key="jogos-menu"
-                                 variants={containerVariants}
-                                 initial="closed"
-                                 animate="open"
-                                 exit="closed"
-                                 className="grid grid-cols-2 gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-sm sm:max-w-xs mx-auto overflow-hidden"
-                            >
-                                 {salaDeJogosButtons.map((btn, i) => (
-                                    <motion.button
-                                        key={i}
-                                        onClick={btn.action}
-                                        variants={itemVariants}
-                                        className={subButtonStyle}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                      <span className="relative z-10">{btn.label}</span>
-                                      <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
-                                        <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
-                                      </span>
-                                    </motion.button>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </motion.div>
+              {/* Dropdown Panel */}
+              <AnimatePresence>
+                  {openMenuGroup && (
+                      <motion.div
+                          key={openMenuGroup}
+                          variants={containerVariants}
+                          initial="closed"
+                          animate="open"
+                          exit="closed"
+                          className="flex flex-wrap justify-center gap-[clamp(0.5rem,2cqi,0.8rem)] w-full max-w-4xl mx-auto pt-4"
+                      >
+                          {subButtonGroups[openMenuGroup].map((btn, i) => (
+                              <motion.button
+                                  key={btn.label}
+                                  onClick={btn.action}
+                                  variants={itemVariants}
+                                  className={subButtonStyle}
+                                  whileHover={{ scale: 1.05, y: -2 }}
+                                  whileTap={{ scale: 0.98 }}
+                              >
+                                  <span className="relative z-10">{btn.label}</span>
+                                  <span className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+                                      <span className="absolute block w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%]"></span>
+                                  </span>
+                              </motion.button>
+                          ))}
+                      </motion.div>
+                  )}
+              </AnimatePresence>
             </div>
             
             <div className="flex items-center gap-[clamp(0.75rem,3cqi,1.25rem)]">
