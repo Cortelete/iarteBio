@@ -11,6 +11,20 @@ interface PortfolioModalProps {
 
 const portfolioItems = [
   {
+    title: 'Comando Autoservice',
+    category: 'Site Institucional',
+    description: 'Website profissional para um centro automotivo, com agendamento de serviços e apresentação da empresa.',
+    image: '/ComandoAutoservice.png',
+    link: 'https://comandoauto.vercel.app/'
+  },
+  {
+    title: 'Gusta',
+    category: 'Link na Bio',
+    description: 'Página de Link na Bio para profissional, centralizando seus contatos e redes sociais.',
+    image: '/GustaBio.png',
+    link: 'https://gustabio.vercel.app/'
+  },
+  {
     title: 'IA.Palavra',
     category: 'Ferramenta de IA',
     description: 'Uma ferramenta de IA para geração e análise de textos, otimizando a criação de conteúdo.',
